@@ -5,8 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,10 +34,13 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "office_id", nullable = false)
     private Office office;
+    @ManyToOne
+    @JoinColumn(name = "division_id", nullable = false)
+    private Division division;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",joinColumns = @JoinColumn(name = "user_id"),
                                 inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+    private Set<Role> roles;
     @Column(name="executor")
     private boolean executor;
     @Column(name="free")
@@ -48,30 +50,5 @@ public class User implements Serializable {
     @Column(name="reject_counter")
     private int rejectCounter;
 
-//    public User() {
-//    }
-//
-//    public User(int id, String loginName, String password, boolean tempPassword, String email, String firstName,
-//                String lastName, boolean active, Office office, List<Role> roles, boolean executor, boolean free,
-//                int ticketCounter, int rejectCounter) {
-//        this.id = id;
-//        this.loginName = loginName;
-//        this.password = password;
-//        this.tempPassword = tempPassword;
-//        this.email = email;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.active = active;
-//        this.office = office;
-//        this.roles = roles;
-//        this.executor = executor;
-//        this.free = free;
-//        this.ticketCounter = ticketCounter;
-//        this.rejectCounter = rejectCounter;
-//    }
-//
-//    public User(String loginName, String password, String email, String firstName, String lastName, Office office) {
-//        this(0, loginName, password, true, email, firstName, lastName, true, office, new ArrayList<>(), false, true, 0,0);
-//    }
 
 }

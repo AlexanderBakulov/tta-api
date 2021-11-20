@@ -3,10 +3,8 @@ package com.bakulovas.tta.config;
 
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import springfox.documentation.swagger2.mappers.ModelMapper;
 
 @Configuration
 @PropertySource("classpath:application.properties")
@@ -85,11 +83,5 @@ public class ServerConfiguration {
     public int getConfirmTimer() {
         return confirmTimer;
     }
-
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
-
 
 }

@@ -9,15 +9,15 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity
-@Table(name="role")
-public class Role implements Serializable {
+@Table(name = "division")
+public class Division implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name="id")
+    @Column(name = "id")
     private int id;
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-
 }
+
