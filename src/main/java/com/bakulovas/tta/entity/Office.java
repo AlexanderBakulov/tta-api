@@ -18,7 +18,9 @@ public class Office implements Serializable {
     private int id;
     @Column(name="name")
     private String name;
-    @Column(name="time_shift")
-    private int timeShift;
+    @Column(name="time_zone")
+    private int timeZone;
 
+    public Office() {
+    }
 }

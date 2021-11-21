@@ -51,6 +51,9 @@ public class User implements Serializable {
     @Column(name="reject_counter")
     private int rejectCounter;
 
+    public User() {
+    }
+
     public User(int id, String loginName, String password, boolean tempPassword, String email,
                 String firstName, String lastName, boolean active, Office office, Division division,
                 Set<Role> roles, boolean executor, boolean free, int ticketCounter, int rejectCounter) {

@@ -19,5 +19,7 @@ public class Division implements Serializable {
     @Column(name = "name")
     private String name;
 
+    public Division() {
+    }
 }
 
