@@ -43,28 +43,28 @@ public class UserRepositoryTest {
         Division division = div.get();
         User u = new User("Vasya", "11aA", "a@a.a", "vasya", "Vasya", office, division);
         userRepository.save(u);
-        User user = userRepository.findByLoginName("Vasya");
-        assertEquals(u.getLoginName(), user.getLoginName());
+        User user = userRepository.findByLogin("Vasya");
+        assertEquals(u.getLogin(), user.getLogin());
         userRepository.delete(u);
     }
 
     @Test
     public void testUserRepository_incorrectUser() {
-        assertNull(userRepository.findByLoginName("Petya"));
+        assertNull(userRepository.findByLogin("Petya"));
     }
 
 
     @Test
     public void testFindByLogin() {
         String login = "manager";
-        User user = userRepository.findByLoginName(login);
-        assertEquals(login, user.getLoginName());
+        User user = userRepository.findByLogin(login);
+        assertEquals(login, user.getLogin());
     }
 
     @Test
     public void testFindByLogin_wrongLogin() {
         String login = "Wrong";
-        User user = userRepository.findByLoginName(login);
+        User user = userRepository.findByLogin(login);
         assertNull(user);
 
     }

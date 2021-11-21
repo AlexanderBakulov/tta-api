@@ -65,10 +65,10 @@ public class OfficeRepositoryTest {
         User user = new User("login", "password", "email", "firstname", "lastname", office, division);
         user.setRoles(roles);
         userRepository.save(user);
-        User userFromDb = userRepository.findByLoginName(user.getLoginName());
+        User userFromDb = userRepository.findByLogin(user.getLogin());
         assertEquals(user.getId(), userFromDb.getId());
         userRepository.delete(user);
-        userFromDb = userRepository.findByLoginName(user.getLoginName());
+        userFromDb = userRepository.findByLogin(user.getLogin());
         assertNull(userFromDb);
     }
 

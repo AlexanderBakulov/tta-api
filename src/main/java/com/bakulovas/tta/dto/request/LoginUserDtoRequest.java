@@ -8,15 +8,15 @@ import javax.validation.constraints.NotBlank;
 public class LoginUserDtoRequest {
 
     @NotBlank
-    private String loginName;
+    private String login;
     @NotBlank
     private String password;
 
     public LoginUserDtoRequest() {
     }
 
-    public LoginUserDtoRequest(String loginName, String password) {
-        this.loginName = loginName;
+    public LoginUserDtoRequest(String login, String password) {
+        this.login = login;
         this.password = password;
     }
 

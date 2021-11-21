@@ -32,14 +32,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public LoginUserDtoResponse login(LoginUserDtoRequest request) throws ServerException {
+    public LoginUserDtoResponse loginUser(LoginUserDtoRequest request) throws ServerException {
         User user = getUser(request);
-
-        return null;
+        LoginUserDtoResponse response = new LoginUserDtoResponse();
+        return response;
     }
 
     private User getUser(LoginUserDtoRequest request) throws ServerException {
-        User user = userRepository.findByLoginName(request.getLoginName());
+        User user = userRepository.findByLogin(request.getLogin());
         if(user == null || !user.getPassword().equals(request.getPassword())) {
             throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
         }

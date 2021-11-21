@@ -11,7 +11,7 @@ import java.util.Set;
 public class LoginUserDtoResponse {
 
     private long id;
-    private String loginName;
+    private String login;
     private String email;
     private boolean tempPassword;
     private String firstName;
@@ -25,11 +25,11 @@ public class LoginUserDtoResponse {
     public LoginUserDtoResponse() {
     }
 
-    public LoginUserDtoResponse(long id, String loginName, String email, boolean tempPassword,
+    public LoginUserDtoResponse(long id, String login, String email, boolean tempPassword,
                                 String firstName, String lastName, boolean active, String office,
                                 String division, Set<String> roles, String token) {
         this.id = id;
-        this.loginName = loginName;
+        this.login = login;
         this.email = email;
         this.tempPassword = tempPassword;
         this.firstName = firstName;

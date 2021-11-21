@@ -7,6 +7,6 @@ import com.bakulovas.tta.errors.ServerException;
 
 public interface UserService {
 
-    LoginUserDtoResponse login(LoginUserDtoRequest request) throws ServerException;
+    LoginUserDtoResponse loginUser(LoginUserDtoRequest request) throws ServerException;
 
 }

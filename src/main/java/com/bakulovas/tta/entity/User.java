@@ -19,7 +19,7 @@ public class User implements Serializable {
     @Column(name="id")
     private int id;
     @Column(name="login")
-    private String loginName;
+    private String login;
     @Column(name="password")
     private String password;
     @Column(name="temp")
@@ -54,11 +54,11 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(int id, String loginName, String password, boolean tempPassword, String email,
+    public User(int id, String login, String password, boolean tempPassword, String email,
                 String firstName, String lastName, boolean active, Office office, Division division,
                 Set<Role> roles, boolean executor, boolean free, int ticketCounter, int rejectCounter) {
         this.id = id;
-        this.loginName = loginName;
+        this.login = login;
         this.password = password;
         this.tempPassword = tempPassword;
         this.email = email;
@@ -74,7 +74,7 @@ public class User implements Serializable {
         this.rejectCounter = rejectCounter;
     }
 
-    public User(String loginName, String password, String email, String firstName, String lastName, Office office, Division division) {
-        this(0, loginName, password, false, email, firstName, lastName, true, office, division, new HashSet<>(), false, false, 0, 0);
+    public User(String login, String password, String email, String firstName, String lastName, Office office, Division division) {
+        this(0, login, password, false, email, firstName, lastName, true, office, division, new HashSet<>(), false, false, 0, 0);
     }
 }

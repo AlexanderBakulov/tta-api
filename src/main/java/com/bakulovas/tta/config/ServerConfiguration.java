@@ -2,11 +2,13 @@ package com.bakulovas.tta.config;
 
 
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
+@Getter
 @PropertySource("classpath:application.properties")
 public class ServerConfiguration {
 
@@ -46,42 +48,6 @@ public class ServerConfiguration {
         this.lunchStartHour = lunchStartHour;
         this.lunchEndHour = lunchEndHour;
         this.confirmTimer = confirmTimer;
-    }
-
-    public int getMinPasswordLength() {
-        return minPasswordLength;
-    }
-
-    public int getLowPriorityTimer() {
-        return lowPriorityTimer;
-    }
-
-    public int getMediumPriorityTimer() {
-        return mediumPriorityTimer;
-    }
-
-    public int getCriticalPriorityTimer() {
-        return criticalPriorityTimer;
-    }
-
-    public int getWorkStartHour() {
-        return workStartHour;
-    }
-
-    public int getWorkEndHour() {
-        return workEndHour;
-    }
-
-    public int getLunchStartHour() {
-        return lunchStartHour;
-    }
-
-    public int getLunchEndHour() {
-        return lunchEndHour;
-    }
-
-    public int getConfirmTimer() {
-        return confirmTimer;
     }
 
 }

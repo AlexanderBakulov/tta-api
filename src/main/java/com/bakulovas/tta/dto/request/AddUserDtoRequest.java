@@ -16,7 +16,7 @@ public class AddUserDtoRequest {
     @NotBlank
     @Size(min=1, max=30)
     @Pattern(regexp = NAME_VALIDATION_REGEXP, message = INVALID_LOGIN)
-    private String loginName;
+    private String login;
     @NotBlank
     @MinLength
     @Pattern(regexp = PASSWORD_VALIDATION_REGEXP, message = INVALID_PASSWORD)
@@ -43,9 +43,9 @@ public class AddUserDtoRequest {
     public AddUserDtoRequest() {
     }
 
-    public AddUserDtoRequest(String loginName, String password, String email, String firstName,
+    public AddUserDtoRequest(String login, String password, String email, String firstName,
                              String lastName, String office, String division, Set<String> roles) {
-        this.loginName = loginName;
+        this.login = login;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
