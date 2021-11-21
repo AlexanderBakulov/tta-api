@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -50,5 +51,27 @@ public class User implements Serializable {
     @Column(name="reject_counter")
     private int rejectCounter;
 
+    public User(int id, String loginName, String password, boolean tempPassword, String email,
+                String firstName, String lastName, boolean active, Office office, Division division,
+                Set<Role> roles, boolean executor, boolean free, int ticketCounter, int rejectCounter) {
+        this.id = id;
+        this.loginName = loginName;
+        this.password = password;
+        this.tempPassword = tempPassword;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.active = active;
+        this.office = office;
+        this.division = division;
+        this.roles = roles;
+        this.executor = executor;
+        this.free = free;
+        this.ticketCounter = ticketCounter;
+        this.rejectCounter = rejectCounter;
+    }
 
+    public User(String loginName, String password, String email, String firstName, String lastName, Office office, Division division) {
+        this(0, loginName, password, false, email, firstName, lastName, true, office, division, new HashSet<>(), false, false, 0, 0);
+    }
 }
