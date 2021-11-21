@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +24,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
-
 
     @Override
     @Transactional
@@ -38,9 +40,13 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
+    public User findByLogin(String login) {
+        return userRepository.findByLogin(login);
+    }
+
     private User getUser(LoginUserDtoRequest request) throws ServerException {
-        User user = userRepository.findByLogin(request.getLogin());
-        if(user == null || !user.getPassword().equals(request.getPassword())) {
+        User user = findByLogin(request.getLogin());
+        if(user == null || passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
         }
         if(!user.isActive()) {
