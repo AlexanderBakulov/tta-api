@@ -34,12 +34,12 @@ DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
 id INT(32) NOT NULL AUTO_INCREMENT,
-login VARCHAR(30) NOT NULL,
+login VARCHAR(32) NOT NULL,
 password VARCHAR(68) NOT NULL,
 temp BOOLEAN NOT NULL DEFAULT TRUE,
-email VARCHAR(50) NOT NULL,
-first_name VARCHAR(30) NOT NULL,
-last_name VARCHAR(30) NOT NULL,
+email VARCHAR(64) NOT NULL,
+first_name VARCHAR(32) NOT NULL,
+last_name VARCHAR(32) NOT NULL,
 active BOOLEAN NOT NULL DEFAULT TRUE,
 office_id INT(32),
 division_id INT(32),
@@ -59,13 +59,13 @@ FOREIGN KEY (division_id) REFERENCES division (id)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 INSERT INTO `user` (login, password, email, first_name, last_name, office_id, division_id)
-VALUES ('admin', '1d8b9bdf745c1890fa6e03c4ea5675b944ffb8b49737f37b12a16e7f6881ee95', 'admin@tta.com', 'admin', 'admin', 1, 1);
+VALUES ('admin', 'pass', 'admin@tta.com', 'admin', 'admin', 1, 1);
 
 DROP TABLE IF EXISTS `role`;
 
 CREATE TABLE `role` (
 id INT(32) NOT NULL AUTO_INCREMENT,
-name VARCHAR(30) NOT NULL,
+name VARCHAR(32) NOT NULL,
 PRIMARY KEY (id),
 UNIQUE KEY name (name)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;

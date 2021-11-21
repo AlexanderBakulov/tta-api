@@ -13,9 +13,9 @@ public class ServerConfiguration {
     public static final String INVALID_PASSWORD = "Password must contains at least one lowercase letter, one uppercase letter and one digit.";
     public static final String INVALID_LOGIN = "Login must contains only latin letters";
 
-    public static final String PASSWORD_VALIDATION_EXP = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$";
+    public static final String PASSWORD_VALIDATION_REGEXP = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$";
 
-    public static final String NAME_VALIDATION_EXP = "^[A-Za-z]+$";
+    public static final String NAME_VALIDATION_REGEXP = "^[A-Za-z]+$";
 
     private final int minPasswordLength;
     private final int lowPriorityTimer;
