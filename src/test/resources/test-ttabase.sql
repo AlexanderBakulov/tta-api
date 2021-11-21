@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS `ttabase2`;
-CREATE DATABASE `ttabase2`;
-USE `ttabase2`;
+DROP DATABASE IF EXISTS `test-ttabase2`;
+CREATE DATABASE `test-ttabase2`;
+USE `test-ttabase2`;
 
 DROP TABLE IF EXISTS `office`;
 
@@ -88,46 +88,3 @@ FOREIGN KEY (role_id) REFERENCES role (id)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 INSERT INTO `user_role` (user_id, role_id) VALUES (1, 1);
-
-DROP TABLE IF EXISTS `ticket`;
-
---CREATE TABLE `ticket` (
---id INT(64) NOT NULL AUTO_INCREMENT,
---subject VARCHAR(50) NOT NULL,
---priority ENUM('URGENT', 'CRITICAL', 'MEDIUM', 'LOW') NOT NULL,
---current_priority ENUM('URGENT', 'CRITICAL', 'MEDIUM', 'LOW') NOT NULL,
---message VARCHAR(100) NOT NULL,
---creator_id INT(64) NOT NULL,
---status ENUM('CREATED', 'QUEUED', 'IN_WORK', 'REPORTED_AS_DONE', 'CONFIRMED', 'REJECTED', 'SUPPORT_REJECT', 'HOLD') NOT NULL,
---created DATETIME NOT NULL,
---in_work DATETIME DEFAULT NULL,
---executor_id INT(64) DEFAULT NULL,
---done DATETIME DEFAULT NULL,
---confirmed DATETIME DEFAULT NULL,
---rejected DATETIME DEFAULT NULL,
---support_rejected DATETIME DEFAULT NULL,
---support_reject_cause VARCHAR(100) DEFAULT NULL,
---start_hold DATETIME DEFAULT NULL,
---end_hold DATETIME DEFAULT NULL,
---hold_cause VARCHAR(100) DEFAULT NULL,
---PRIMARY KEY (id),
---KEY creator_id (creator_id),
---KEY executor_id (executor_id),
---KEY priority (priority),
---KEY status (status),
---FOREIGN KEY (creator_id) REFERENCES user (id),
---FOREIGN KEY (executor_id) REFERENCES user (id)
---) ENGINE=INNODB DEFAULT CHARSET=utf8;
---
---
---CREATE TABLE `event` (
---id INT(64) NOT NULL AUTO_INCREMENT,
---ticket_id INT(64) NOT NULL,
---status ENUM('CREATED', 'QUEUED', 'IN_WORK', 'REPORTED_AS_DONE', 'CONFIRMED', 'REJECTED', 'SUPPORT_REJECT', 'HOLD') NOT NULL,
---start_time DATETIME DEFAULT NULL,
---end_time DATETIME DEFAULT NULL,
---PRIMARY KEY (id),
---KEY ticket_id (ticket_id),
---KEY status (status),
---FOREIGN KEY (ticket_id) REFERENCES ticket (id)
---) ENGINE=INNODB DEFAULT CHARSET=utf8;
