@@ -1,13 +1,11 @@
 package com.bakulovas.tta.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name="office")
 public class Office implements Serializable {
@@ -21,6 +19,4 @@ public class Office implements Serializable {
     @Column(name="time_zone")
     private int timeZone;
 
-    public Office() {
-    }
 }

@@ -23,7 +23,7 @@ public class User implements Serializable {
     @Column(name="password")
     private String password;
     @Column(name="temp")
-    private boolean tempPassword;
+    private boolean isTempPassword;
     @Column(name="email")
     private String email;
     @Column(name="first_name")
@@ -31,7 +31,7 @@ public class User implements Serializable {
     @Column(name="last_name")
     private String lastName;
     @Column(name="active")
-    private boolean active;
+    private boolean isActive;
     @ManyToOne
     @JoinColumn(name = "office_id", nullable = false)
     private Office office;
@@ -43,9 +43,9 @@ public class User implements Serializable {
                                 inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
     @Column(name="executor")
-    private boolean executor;
+    private boolean isExecutor;
     @Column(name="free")
-    private boolean free;
+    private boolean isFree;
     @Column(name="ticket_counter")
     private int ticketCounter;
     @Column(name="reject_counter")
@@ -60,16 +60,16 @@ public class User implements Serializable {
         this.id = id;
         this.login = login;
         this.password = password;
-        this.tempPassword = tempPassword;
+        this.isTempPassword = tempPassword;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.active = active;
+        this.isActive = active;
         this.office = office;
         this.division = division;
         this.roles = roles;
-        this.executor = executor;
-        this.free = free;
+        this.isExecutor = executor;
+        this.isFree = free;
         this.ticketCounter = ticketCounter;
         this.rejectCounter = rejectCounter;
     }
