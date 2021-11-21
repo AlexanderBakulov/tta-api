@@ -1,8 +1,10 @@
 package com.bakulovas.tta.dto.request;
 
+import lombok.Getter;
+
 import javax.validation.constraints.NotBlank;
 
-
+@Getter
 public class LoginUserDtoRequest {
 
     @NotBlank
@@ -18,11 +20,4 @@ public class LoginUserDtoRequest {
         this.password = password;
     }
 
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 }
