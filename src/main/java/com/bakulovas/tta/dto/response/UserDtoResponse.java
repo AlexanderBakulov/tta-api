@@ -12,10 +12,10 @@ public class UserDtoResponse {
     private long id;
     private String login;
     private String email;
-    private boolean tempPassword;
+    private boolean isTempPassword;
     private String firstName;
     private String lastName;
-    private boolean active;
+    private boolean isActive;
     private String office;
     private String division;
     private Set<String> roles;
@@ -23,16 +23,16 @@ public class UserDtoResponse {
     public UserDtoResponse() {
     }
 
-    public UserDtoResponse(long id, String login, String email, boolean tempPassword,
-                           String firstName, String lastName, boolean active, String office,
+    public UserDtoResponse(long id, String login, String email, boolean isTempPassword,
+                           String firstName, String lastName, boolean isActive, String office,
                            String division, Set<String> roles) {
         this.id = id;
         this.login = login;
         this.email = email;
-        this.tempPassword = tempPassword;
+        this.isTempPassword = isTempPassword;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.active = active;
+        this.isActive = isActive;
         this.office = office;
         this.division = division;
         this.roles = roles;
