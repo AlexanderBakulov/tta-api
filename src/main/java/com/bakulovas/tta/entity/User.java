@@ -54,22 +54,22 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(int id, String login, String password, boolean tempPassword, String email,
-                String firstName, String lastName, boolean active, Office office, Division division,
-                Set<Role> roles, boolean executor, boolean free, int ticketCounter, int rejectCounter) {
+    public User(int id, String login, String password, boolean isTempPassword, String email,
+                String firstName, String lastName, boolean isActive, Office office, Division division,
+                Set<Role> roles, boolean isExecutor, boolean isFree, int ticketCounter, int rejectCounter) {
         this.id = id;
         this.login = login;
         this.password = password;
-        this.isTempPassword = tempPassword;
+        this.isTempPassword = isTempPassword;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.isActive = active;
+        this.isActive = isActive;
         this.office = office;
         this.division = division;
         this.roles = roles;
-        this.isExecutor = executor;
-        this.isFree = free;
+        this.isExecutor = isExecutor;
+        this.isFree = isFree;
         this.ticketCounter = ticketCounter;
         this.rejectCounter = rejectCounter;
     }
