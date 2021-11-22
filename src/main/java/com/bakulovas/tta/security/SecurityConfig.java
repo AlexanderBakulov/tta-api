@@ -1,4 +1,4 @@
-package com.bakulovas.tta.config;
+package com.bakulovas.tta.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

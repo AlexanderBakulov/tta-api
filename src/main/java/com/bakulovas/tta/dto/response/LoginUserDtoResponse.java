@@ -3,7 +3,6 @@ package com.bakulovas.tta.dto.response;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Set;
 
 @Getter

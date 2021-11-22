@@ -36,11 +36,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public LoginUserDtoResponse loginUser(LoginUserDtoRequest request) throws ServerException {
         User user = getUser(request);
+    //    String token = jwtProvider.generateToken(user.getLogin());
         LoginUserDtoResponse response = new LoginUserDtoResponse();
         return response;
     }
 
-    public User findByLogin(String login) {
+    private User findByLogin(String login) {
         return userRepository.findByLogin(login);
     }
 
