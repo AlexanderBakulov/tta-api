@@ -41,7 +41,9 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
-    private User findByLogin(String login) {
+    @Override
+    @Transactional
+    public User findByLogin(String login) {
         return userRepository.findByLogin(login);
     }
 
