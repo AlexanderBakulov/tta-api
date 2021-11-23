@@ -1,12 +1,10 @@
 package com.bakulovas.tta.dto.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 public class LoginUserDtoResponse {
 
     private long id;
@@ -21,22 +19,4 @@ public class LoginUserDtoResponse {
     private Set<String> roles;
     private String token;
 
-    public LoginUserDtoResponse() {
-    }
-
-    public LoginUserDtoResponse(long id, String login, String email, boolean isTempPassword,
-                                String firstName, String lastName, boolean isActive, String office,
-                                String division, Set<String> roles, String token) {
-        this.id = id;
-        this.login = login;
-        this.email = email;
-        this.isTempPassword = isTempPassword;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.isActive = isActive;
-        this.office = office;
-        this.division = division;
-        this.roles = roles;
-        this.token = token;
-    }
 }

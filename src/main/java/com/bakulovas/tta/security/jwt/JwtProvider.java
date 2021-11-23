@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.json.JsonParseException;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -31,7 +32,7 @@ public class JwtProvider {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
             return true;
-        } catch (Exception e) {
+        } catch (JsonParseException e) {
             log.severe("invalid token");
         }
         return false;

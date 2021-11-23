@@ -5,11 +5,14 @@ import com.bakulovas.tta.dto.response.LoginUserDtoResponse;
 import com.bakulovas.tta.errors.ServerException;
 import com.bakulovas.tta.service.UserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api")
@@ -24,8 +27,8 @@ public class AuthEndpoint {
     }
 
     @PostMapping("/auth")
-    public LoginUserDtoResponse login(@RequestBody LoginUserDtoRequest request) throws ServerException {
-
+    @ApiOperation(value="Login user")
+    public LoginUserDtoResponse login(@Valid @RequestBody LoginUserDtoRequest request) throws ServerException {
         return userService.loginUser(request);
     }
 }

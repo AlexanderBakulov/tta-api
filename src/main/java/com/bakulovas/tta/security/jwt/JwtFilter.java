@@ -1,6 +1,6 @@
 package com.bakulovas.tta.security.jwt;
 
-import com.bakulovas.tta.security.CustomUserDetails;
+import com.bakulovas.tta.security.UserDetailsImpl;
 import com.bakulovas.tta.security.CustomUserDetailsService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +32,12 @@ public class JwtFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        logger.info("do filter...");
+        log.info("do filter...");
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
         if (token != null && jwtProvider.validateToken(token)) {
             String userLogin = jwtProvider.getLoginFromToken(token);
-            CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(userLogin);
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+            UserDetailsImpl userDetailsImpl = customUserDetailsService.loadUserByUsername(userLogin);
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetailsImpl, null, userDetailsImpl.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
         filterChain.doFilter(servletRequest, servletResponse);
