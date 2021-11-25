@@ -11,6 +11,9 @@ import com.bakulovas.tta.repository.jpa.UserRepository;
 import com.bakulovas.tta.security.jwt.JwtProvider;
 import com.bakulovas.tta.service.UserService;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Log
-@Data
+@Getter
+@Setter
 @Service
 public class UserServiceImpl implements UserService {
 

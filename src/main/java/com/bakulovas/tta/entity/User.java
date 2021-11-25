@@ -1,6 +1,7 @@
 package com.bakulovas.tta.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name="user")
 public class User implements Serializable {
@@ -51,8 +53,6 @@ public class User implements Serializable {
     @Column(name="reject_counter")
     private int rejectCounter;
 
-    public User() {
-    }
 
     public User(int id, String login, String password, boolean isTempPassword, String email,
                 String firstName, String lastName, boolean isActive, Office office, Division division,

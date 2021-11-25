@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 public class ErrorsDtoResponse {
 
-    private List<Error> errors;
+    private final List<Error> errors;
 
     public ErrorsDtoResponse() {
         this.errors = new ArrayList<>();

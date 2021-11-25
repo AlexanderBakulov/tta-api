@@ -3,6 +3,7 @@ package com.bakulovas.tta.dto.request;
 
 import com.bakulovas.tta.dto.validation.annotations.MinLength;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 
@@ -11,10 +12,11 @@ import java.util.Set;
 import static com.bakulovas.tta.config.ServerConfiguration.*;
 
 @Getter
+@NoArgsConstructor
 public class AddUserDtoRequest {
 
     @NotBlank
-    @Size(min=1, max=30)
+    @Size(min=1, max=32)
     @Pattern(regexp = NAME_VALIDATION_REGEXP, message = INVALID_LOGIN)
     private String login;
     @NotBlank
@@ -40,8 +42,6 @@ public class AddUserDtoRequest {
     @NotEmpty
     private Set<String> roles;
 
-    public AddUserDtoRequest() {
-    }
 
     public AddUserDtoRequest(String login, String password, String email, String firstName,
                              String lastName, String office, String division, Set<String> roles) {

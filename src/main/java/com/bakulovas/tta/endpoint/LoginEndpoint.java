@@ -17,16 +17,16 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("api")
 @Api(value="Authorization")
-public class AuthEndpoint {
+public class LoginEndpoint {
 
     private final UserService userService;
 
     @Autowired
-    public AuthEndpoint(UserService userService) {
+    public LoginEndpoint(UserService userService) {
         this.userService = userService;
     }
 
-    @PostMapping("/auth")
+    @PostMapping("/login")
     @ApiOperation(value="Login user")
     public LoginUserDtoResponse login(@Valid @RequestBody LoginUserDtoRequest request) throws ServerException {
         return userService.loginUser(request);

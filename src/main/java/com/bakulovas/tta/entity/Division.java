@@ -2,12 +2,15 @@ package com.bakulovas.tta.entity;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "division")
 public class Division implements Serializable {
@@ -19,7 +22,5 @@ public class Division implements Serializable {
     @Column(name = "name")
     private String name;
 
-    public Division() {
-    }
 }
 

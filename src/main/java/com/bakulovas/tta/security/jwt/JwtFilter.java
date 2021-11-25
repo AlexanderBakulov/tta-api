@@ -1,7 +1,7 @@
 package com.bakulovas.tta.security.jwt;
 
 import com.bakulovas.tta.security.UserDetailsImpl;
-import com.bakulovas.tta.security.CustomUserDetailsService;
+import com.bakulovas.tta.security.UserDetailsServiceImpl;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,17 +18,20 @@ import java.io.IOException;
 
 import static org.springframework.util.StringUtils.hasText;
 
-@Component
 @Log
+@Component
 public class JwtFilter extends GenericFilterBean {
 
     public static final String AUTHORIZATION = "Authorization";
 
-    @Autowired
-    private JwtProvider jwtProvider;
+    private final JwtProvider jwtProvider;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    public JwtFilter(JwtProvider jwtProvider, UserDetailsServiceImpl userDetailsServiceImpl) {
+        this.jwtProvider = jwtProvider;
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
+    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -36,7 +39,7 @@ public class JwtFilter extends GenericFilterBean {
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
         if (token != null && jwtProvider.validateToken(token)) {
             String userLogin = jwtProvider.getLoginFromToken(token);
-            UserDetailsImpl userDetailsImpl = customUserDetailsService.loadUserByUsername(userLogin);
+            UserDetailsImpl userDetailsImpl = userDetailsServiceImpl.loadUserByUsername(userLogin);
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetailsImpl, null, userDetailsImpl.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
