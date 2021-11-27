@@ -12,7 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 @Getter
 @Configuration
 @PropertySource("classpath:application.properties")
-public class ServerConfiguration {
+public class ServerConfig {
 
     public static final String INVALID_PASSWORD = "Password must contains at least one lowercase letter, one uppercase letter and one digit.";
     public static final String INVALID_LOGIN = "Login must contains only latin letters";
@@ -30,15 +30,15 @@ public class ServerConfiguration {
     private final int confirmTimer;
 
 
-    public ServerConfiguration(@Value("${tta.min_password_length}") int minPasswordLength,
-                               @Value("${tta.low_priority_timer}") int lowPriorityTimer,
-                               @Value("${tta.medium_priority_timer}") int mediumPriorityTimer,
-                               @Value("${tta.critical_priority_timer}") int criticalPriorityTimer,
-                               @Value("${tta.work_start_hour}") int workStartHour,
-                               @Value("${tta.work_end_hour}") int workEndHour,
-                               @Value("${tta.lunch_start_hour}") int lunchStartHour,
-                               @Value("${tta.lunch_end_hour}") int lunchEndHour,
-                               @Value("${tta.confirm_timer}") int confirmTimer) {
+    public ServerConfig(@Value("${tta.min_password_length}") int minPasswordLength,
+                        @Value("${tta.low_priority_timer}") int lowPriorityTimer,
+                        @Value("${tta.medium_priority_timer}") int mediumPriorityTimer,
+                        @Value("${tta.critical_priority_timer}") int criticalPriorityTimer,
+                        @Value("${tta.work_start_hour}") int workStartHour,
+                        @Value("${tta.work_end_hour}") int workEndHour,
+                        @Value("${tta.lunch_start_hour}") int lunchStartHour,
+                        @Value("${tta.lunch_end_hour}") int lunchEndHour,
+                        @Value("${tta.confirm_timer}") int confirmTimer) {
         this.minPasswordLength = minPasswordLength;
         this.lowPriorityTimer = lowPriorityTimer;
         this.mediumPriorityTimer = mediumPriorityTimer;
@@ -50,9 +50,6 @@ public class ServerConfiguration {
         this.confirmTimer = confirmTimer;
     }
 
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
+
 
 }

@@ -9,7 +9,7 @@ import javax.validation.constraints.*;
 
 import java.util.Set;
 
-import static com.bakulovas.tta.config.ServerConfiguration.*;
+import static com.bakulovas.tta.config.ServerConfig.*;
 
 @Getter
 @NoArgsConstructor
