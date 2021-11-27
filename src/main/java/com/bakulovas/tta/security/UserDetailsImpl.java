@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -23,16 +22,19 @@ public class UserDetailsImpl implements UserDetails {
     private boolean isActive;
     private Office office;
     private Division division;
-    private Set<String> roles;
-    private boolean isExecutor;
-
     private Collection<? extends GrantedAuthority> grantedAuthorities;
 
     public static UserDetailsImpl fromUserToUserDetails(User user) {
         UserDetailsImpl userDetails = new UserDetailsImpl();
         userDetails.login = user.getLogin();
         userDetails.password = user.getPassword();
-        //todo user.getRoles()
+        userDetails.isTempPassword = user.isTempPassword();
+        userDetails.email = user.getEmail();
+        userDetails.firstName = user.getFirstName();
+        userDetails.lastName = user.getLastName();
+        userDetails.isActive = user.isActive();
+        userDetails.office = user.getOffice();
+        userDetails.division = user.getDivision();
         userDetails.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getName()));
         return userDetails;
     }
@@ -59,14 +61,6 @@ public class UserDetailsImpl implements UserDetails {
 
     public Division getDivision() {
         return division;
-    }
-
-    public Set<String> getRoles() {
-        return roles;
-    }
-
-    public boolean isExecutor() {
-        return isExecutor;
     }
 
     @Override

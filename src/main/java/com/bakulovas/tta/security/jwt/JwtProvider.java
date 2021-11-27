@@ -43,12 +43,6 @@ public class JwtProvider {
         return claims.getSubject();
     }
 
-    public UserDetailsImpl getUserDetailsFromToken(String token) {
-        User user = new User();
-        //todo get data from token and set to user
-        return null;
-    }
-
     private Jws<Claims> parseToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
     }
