@@ -58,12 +58,13 @@ public class OfficeRepositoryTest {
             division = div.get();
         }
 
-        Set<Role> roles = new HashSet<>();
-        Optional<Role> role = roleRepository.findById(1);
-        roles.add(role.get());
+        Optional<Role> r = roleRepository.findById(1);
+        Role role = null;
+        if(r.isPresent()) {
+            role = r.get();
+        }
 
-        User user = new User("login", "password", "email", "firstname", "lastname", office, division);
-        user.setRoles(roles);
+        User user = new User("login", "password", "email", "firstname", "lastname", office, division, role);
         userRepository.save(user);
         User userFromDb = userRepository.findByLogin(user.getLogin());
         assertEquals(user.getId(), userFromDb.getId());

@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
 
 @Getter
 @Setter
@@ -20,12 +19,12 @@ public class UserDtoResponse {
     private boolean isActive;
     private String office;
     private String division;
-    private Set<String> roles;
+    private String role;
 
 
     public UserDtoResponse(long id, String login, String email, boolean isTempPassword,
                            String firstName, String lastName, boolean isActive, String office,
-                           String division, Set<String> roles) {
+                           String division, String role) {
         this.id = id;
         this.login = login;
         this.email = email;
@@ -35,6 +34,6 @@ public class UserDtoResponse {
         this.isActive = isActive;
         this.office = office;
         this.division = division;
-        this.roles = roles;
+        this.role = role;
     }
 }

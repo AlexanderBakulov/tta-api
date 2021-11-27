@@ -26,19 +26,9 @@ public class CommonMapper {
         LoginUserDtoResponse response = modelMapper.map(user, LoginUserDtoResponse.class);
         response.setOffice(user.getOffice().getName());
         response.setDivision(user.getDivision().getName());
-        response.setRoles(rolesToStringSet(user.getRoles()));
+        response.setRole(user.getRole().getName());
         response.setToken(token);
         return response;
     }
 
-    public Set<String> rolesToStringSet(Set<Role> roles) {
-        Set<String> responseSet = new HashSet<>();
-        if(roles == null || roles.isEmpty()) {
-            return responseSet;
-        }
-        for (Role role : roles) {
-            responseSet.add(role.getName());
-        }
-        return responseSet;
-    }
 }

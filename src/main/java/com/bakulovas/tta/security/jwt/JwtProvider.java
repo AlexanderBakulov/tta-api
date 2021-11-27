@@ -1,8 +1,8 @@
 package com.bakulovas.tta.security.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.bakulovas.tta.entity.User;
+import com.bakulovas.tta.security.UserDetailsImpl;
+import io.jsonwebtoken.*;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.JsonParseException;
@@ -30,7 +30,7 @@ public class JwtProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            parseToken(token);
             return true;
         } catch (JsonParseException e) {
             log.severe("invalid token");
@@ -39,7 +39,17 @@ public class JwtProvider {
     }
 
     public String getLoginFromToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+        Claims claims = parseToken(token).getBody();
         return claims.getSubject();
+    }
+
+    public UserDetailsImpl getUserDetailsFromToken(String token) {
+        User user = new User();
+        //todo get data from token and set to user
+        return null;
+    }
+
+    private Jws<Claims> parseToken(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
     }
 }

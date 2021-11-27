@@ -6,8 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -40,12 +38,9 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "division_id", nullable = false)
     private Division division;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",joinColumns = @JoinColumn(name = "user_id"),
-                                inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
-    @Column(name="executor")
-    private boolean isExecutor;
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
     @Column(name="free")
     private boolean isFree;
     @Column(name="ticket_counter")
@@ -56,7 +51,7 @@ public class User implements Serializable {
 
     public User(int id, String login, String password, boolean isTempPassword, String email,
                 String firstName, String lastName, boolean isActive, Office office, Division division,
-                Set<Role> roles, boolean isExecutor, boolean isFree, int ticketCounter, int rejectCounter) {
+                Role role, boolean isFree, int ticketCounter, int rejectCounter) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -67,14 +62,13 @@ public class User implements Serializable {
         this.isActive = isActive;
         this.office = office;
         this.division = division;
-        this.roles = roles;
-        this.isExecutor = isExecutor;
+        this.role = role;
         this.isFree = isFree;
         this.ticketCounter = ticketCounter;
         this.rejectCounter = rejectCounter;
     }
 
-    public User(String login, String password, String email, String firstName, String lastName, Office office, Division division) {
-        this(0, login, password, false, email, firstName, lastName, true, office, division, new HashSet<>(), false, false, 0, 0);
+    public User(String login, String password, String email, String firstName, String lastName, Office office, Division division, Role role) {
+        this(0, login, password, false, email, firstName, lastName, true, office, division, role, false, 0, 0);
     }
 }

@@ -1,4 +1,4 @@
-package com.bakulovas.tta.config;
+package com.bakulovas.tta.mappers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

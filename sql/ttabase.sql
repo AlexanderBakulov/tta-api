@@ -30,37 +30,6 @@ INSERT INTO `division` (name) VALUES ('Consultation department');
 INSERT INTO `division` (name) VALUES ('Accounting department');
 INSERT INTO `division` (name) VALUES ('Management');
 
-DROP TABLE IF EXISTS `user`;
-
-CREATE TABLE `user` (
-id INT(32) NOT NULL AUTO_INCREMENT,
-login VARCHAR(32) NOT NULL,
-password VARCHAR(68) NOT NULL,
-temp BOOLEAN NOT NULL DEFAULT TRUE,
-email VARCHAR(64) NOT NULL,
-first_name VARCHAR(32) NOT NULL,
-last_name VARCHAR(32) NOT NULL,
-active BOOLEAN NOT NULL DEFAULT TRUE,
-office_id INT(32),
-division_id INT(32),
-executor BOOLEAN DEFAULT FALSE,
-free BOOLEAN DEFAULT TRUE,
-ticket_counter INT(16) DEFAULT 0,
-reject_counter INT(16) DEFAULT 0,
-PRIMARY KEY (id),
-UNIQUE KEY login (login),
-UNIQUE KEY email (email),
-KEY first_name (first_name),
-KEY last_name (last_name),
-KEY executor (executor),
-KEY free (free),
-FOREIGN KEY (office_id) REFERENCES office (id),
-FOREIGN KEY (division_id) REFERENCES division (id)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
-
-INSERT INTO `user` (login, password, email, first_name, last_name, office_id, division_id)
-VALUES ('admin', 'pass', 'admin@tta.com', 'admin', 'admin', 1, 1);
-
 DROP TABLE IF EXISTS `role`;
 
 CREATE TABLE `role` (
@@ -75,21 +44,40 @@ INSERT INTO `role` (name) VALUES ('ROLE_MANAGER');
 INSERT INTO `role` (name) VALUES ('ROLE_SUPPORT');
 INSERT INTO `role` (name) VALUES ('ROLE_USER');
 
-DROP TABLE IF EXISTS `user_role`;
+DROP TABLE IF EXISTS `user`;
 
-CREATE TABLE `user_role` (
-user_id INT(32) NOT NULL,
-role_id INT(32) NOT NULL,
-PRIMARY KEY (user_id, role_id),
-KEY user_id (user_id),
-KEY role_id (role_id),
-FOREIGN KEY (user_id) REFERENCES user (id),
+CREATE TABLE `user` (
+id INT(32) NOT NULL AUTO_INCREMENT,
+login VARCHAR(32) NOT NULL,
+password VARCHAR(68) NOT NULL,
+temp BOOLEAN NOT NULL DEFAULT TRUE,
+email VARCHAR(64) NOT NULL,
+first_name VARCHAR(32) NOT NULL,
+last_name VARCHAR(32) NOT NULL,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+office_id INT(32),
+division_id INT(32),
+role_id INT(32),
+free BOOLEAN DEFAULT TRUE,
+ticket_counter INT(16) DEFAULT 0,
+reject_counter INT(16) DEFAULT 0,
+PRIMARY KEY (id),
+UNIQUE KEY login (login),
+UNIQUE KEY email (email),
+KEY first_name (first_name),
+KEY last_name (last_name),
+KEY free (free),
+FOREIGN KEY (office_id) REFERENCES office (id),
+FOREIGN KEY (division_id) REFERENCES division (id),
 FOREIGN KEY (role_id) REFERENCES role (id)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-INSERT INTO `user_role` (user_id, role_id) VALUES (1, 1);
+INSERT INTO `user` (login, password, email, first_name, last_name, office_id, division_id, role_id)
+VALUES ('admin', 'pass', 'admin@tta.com', 'admin', 'admin', 1, 1, 1);
 
-DROP TABLE IF EXISTS `ticket`;
+
+
+
 
 --CREATE TABLE `ticket` (
 --id INT(64) NOT NULL AUTO_INCREMENT,

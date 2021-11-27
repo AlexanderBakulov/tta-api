@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 
-import java.util.Set;
 
 import static com.bakulovas.tta.config.ServerConfig.*;
 
@@ -40,11 +39,11 @@ public class AddUserDtoRequest {
     @Size(min=1, max=32)
     private String division;
     @NotEmpty
-    private Set<String> roles;
+    private String role;
 
 
     public AddUserDtoRequest(String login, String password, String email, String firstName,
-                             String lastName, String office, String division, Set<String> roles) {
+                             String lastName, String office, String division, String role) {
         this.login = login;
         this.password = password;
         this.email = email;
@@ -52,7 +51,7 @@ public class AddUserDtoRequest {
         this.lastName = lastName;
         this.office = office;
         this.division = division;
-        this.roles = roles;
+        this.role = role;
     }
 
 }

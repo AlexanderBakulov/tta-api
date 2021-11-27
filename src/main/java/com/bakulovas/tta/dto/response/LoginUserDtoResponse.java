@@ -21,7 +21,7 @@ public class LoginUserDtoResponse {
     private boolean isActive;
     private String office;
     private String division;
-    private Set<String> roles;
+    private String role;
     private String token;
 
 }
