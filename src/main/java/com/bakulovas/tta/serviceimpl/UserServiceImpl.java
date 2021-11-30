@@ -7,6 +7,7 @@ import com.bakulovas.tta.entity.User;
 import com.bakulovas.tta.errors.ServerError;
 import com.bakulovas.tta.errors.ServerException;
 import com.bakulovas.tta.mappers.CommonMapper;
+import com.bakulovas.tta.repository.jpa.UserOptionsRepository;
 import com.bakulovas.tta.repository.jpa.UserRepository;
 import com.bakulovas.tta.service.UserService;
 import lombok.Getter;
@@ -24,11 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserOptionsRepository userOptionsRepository;
     private final CommonMapper commonMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, CommonMapper commonMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserOptionsRepository userOptionsRepository, CommonMapper commonMapper) {
         this.userRepository = userRepository;
+        this.userOptionsRepository = userOptionsRepository;
         this.commonMapper = commonMapper;
     }
 
@@ -49,7 +52,7 @@ public class UserServiceImpl implements UserService {
 
     private User getUser(LoginUserDtoRequest request) throws ServerException {
         User user = findByLogin(request.getLogin());
-        if(user == null ) {
+        if(user == null || request.getPassword() != user.getPassword()) {
             throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
         }
         if(!user.isActive()) {
