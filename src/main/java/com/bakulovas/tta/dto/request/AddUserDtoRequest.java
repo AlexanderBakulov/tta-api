@@ -35,22 +35,18 @@ public class AddUserDtoRequest {
     @NotBlank
     @Size(min=1, max=5)
     private String office;
-    @NotBlank
-    @Size(min=1, max=32)
-    private String division;
     @NotEmpty
     private String role;
 
 
     public AddUserDtoRequest(String login, String password, String email, String firstName,
-                             String lastName, String office, String division, String role) {
+                             String lastName, String office, String role) {
         this.login = login;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.office = office;
-        this.division = division;
         this.role = role;
     }
 

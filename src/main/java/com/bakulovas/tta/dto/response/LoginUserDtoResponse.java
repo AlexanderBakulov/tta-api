@@ -18,7 +18,6 @@ public class LoginUserDtoResponse {
     private boolean isActive;
     private boolean isOnDuty;
     private String office;
-    private String division;
     private String role;
     private String token;
 

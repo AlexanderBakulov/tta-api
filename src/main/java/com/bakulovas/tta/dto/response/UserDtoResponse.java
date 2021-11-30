@@ -19,13 +19,12 @@ public class UserDtoResponse {
     private boolean isActive;
     private boolean isOnDuty;
     private String office;
-    private String division;
     private String role;
 
 
     public UserDtoResponse(long id, String login, String email, boolean isTempPassword,
                            String firstName, String lastName, boolean isActive, boolean isOnDuty,
-                           String office, String division, String role) {
+                           String office, String role) {
         this.id = id;
         this.login = login;
         this.email = email;
@@ -35,7 +34,6 @@ public class UserDtoResponse {
         this.isActive = isActive;
         this.isOnDuty = isOnDuty;
         this.office = office;
-        this.division = division;
         this.role = role;
     }
 }
