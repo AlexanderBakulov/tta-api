@@ -1,7 +1,6 @@
 package com.bakulovas.tta.security;
 
 
-import com.bakulovas.tta.entity.Division;
 import com.bakulovas.tta.entity.Office;
 import com.bakulovas.tta.entity.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +20,6 @@ public class UserDetailsImpl implements UserDetails {
     private String lastName;
     private boolean isActive;
     private Office office;
-    private Division division;
     private Collection<? extends GrantedAuthority> grantedAuthorities;
 
     public static UserDetailsImpl fromUserToUserDetails(User user) {
@@ -34,7 +32,6 @@ public class UserDetailsImpl implements UserDetails {
         userDetails.lastName = user.getLastName();
         userDetails.isActive = user.isActive();
         userDetails.office = user.getOffice();
-        userDetails.division = user.getDivision();
         userDetails.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getName()));
         return userDetails;
     }
@@ -57,10 +54,6 @@ public class UserDetailsImpl implements UserDetails {
 
     public Office getOffice() {
         return office;
-    }
-
-    public Division getDivision() {
-        return division;
     }
 
     @Override

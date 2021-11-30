@@ -1,11 +1,9 @@
 package com.bakulovas.tta.repository;
 
 
-import com.bakulovas.tta.entity.Division;
 import com.bakulovas.tta.entity.Office;
 import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;
-import com.bakulovas.tta.repository.jpa.DivisionRepository;
 import com.bakulovas.tta.repository.jpa.OfficeRepository;
 import com.bakulovas.tta.repository.jpa.RoleRepository;
 import com.bakulovas.tta.repository.jpa.UserRepository;
@@ -15,9 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,9 +27,6 @@ public class OfficeRepositoryTest {
 
     @Autowired
     private OfficeRepository officeRepository;
-
-    @Autowired
-    private DivisionRepository divisionRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -52,19 +45,13 @@ public class OfficeRepositoryTest {
             office = of.get();
         }
 
-        Optional<Division> div = divisionRepository.findById(1);
-        Division division = null;
-        if(div.isPresent()) {
-            division = div.get();
-        }
-
         Optional<Role> r = roleRepository.findById(1);
         Role role = null;
         if(r.isPresent()) {
             role = r.get();
         }
 
-        User user = new User("login", "password", "email", "firstname", "lastname", office, division, role);
+        User user = new User("login", "password", "email", "firstname", "lastname", office, role);
         userRepository.save(user);
         User userFromDb = userRepository.findByLogin(user.getLogin());
         assertEquals(user.getId(), userFromDb.getId());

@@ -1,11 +1,8 @@
 package com.bakulovas.tta.repository;
 
-
-import com.bakulovas.tta.entity.Division;
 import com.bakulovas.tta.entity.Office;
 import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;
-import com.bakulovas.tta.repository.jpa.DivisionRepository;
 import com.bakulovas.tta.repository.jpa.OfficeRepository;
 import com.bakulovas.tta.repository.jpa.RoleRepository;
 import com.bakulovas.tta.repository.jpa.UserRepository;
@@ -27,9 +24,6 @@ public class UserRepositoryTest {
     private OfficeRepository officeRepository;
 
     @Autowired
-    private DivisionRepository divisionRepository;
-
-    @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
@@ -39,12 +33,10 @@ public class UserRepositoryTest {
     @Test
     public void testUserRepository() {
         Optional<Office> of = officeRepository.findById((int) 1);
-        Optional<Division> div = divisionRepository.findById((int) 1);
         Optional<Role> r = roleRepository.findById((int) 1);
         Office office = of.get();
-        Division division = div.get();
         Role role = r.get();
-        User u = new User("Vasya", "11aA", "a@a.a", "vasya", "Vasya", office, division, role);
+        User u = new User("Vasya", "11aA", "a@a.a", "vasya", "Vasya", office, role);
         userRepository.save(u);
         User user = userRepository.findByLogin("Vasya");
         assertEquals(u.getLogin(), user.getLogin());

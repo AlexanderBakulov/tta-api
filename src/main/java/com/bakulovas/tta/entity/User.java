@@ -32,29 +32,19 @@ public class User implements Serializable {
     private String lastName;
     @Column(name="active")
     private boolean isActive;
-    @Column(name="on_duty")
-    private boolean isOnDuty;
+    @Column(name="executor")
+    private boolean isExecutor;
     @ManyToOne
     @JoinColumn(name = "office_id", nullable = false)
     private Office office;
     @ManyToOne
-    @JoinColumn(name = "division_id", nullable = false)
-    private Division division;
-    @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
-    @Column(name="free")
-    private boolean isFree;
-    @Column(name="ticket_counter")
-    private int ticketCounter;
-    @Column(name="reject_counter")
-    private int rejectCounter;
 
 
     public User(int id, String login, String password, boolean isTempPassword, String email,
-                String firstName, String lastName, boolean isActive, boolean isOnDuty,
-                Office office, Division division, Role role, boolean isFree, int ticketCounter,
-                int rejectCounter) {
+                String firstName, String lastName, boolean isActive, boolean isExecutor,
+                Office office, Role role) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -63,17 +53,14 @@ public class User implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.isActive = isActive;
+        this.isExecutor = isExecutor;
         this.office = office;
-        this.division = division;
         this.role = role;
-
-        this.isOnDuty = isOnDuty;
-        this.isFree = isFree;
-        this.ticketCounter = ticketCounter;
-        this.rejectCounter = rejectCounter;
     }
 
-    public User(String login, String password, String email, String firstName, String lastName, Office office, Division division, Role role) {
-        this(0, login, password, false, email, firstName, lastName, true, false, office, division, role, false, 0, 0);
+    public User(String login, String password, String email, String firstName, String lastName,
+                Office office, Role role) {
+        this(0, login, password, false, email, firstName, lastName, true,
+                false, office, role);
     }
 }
