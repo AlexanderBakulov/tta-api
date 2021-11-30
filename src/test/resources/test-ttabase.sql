@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS `test-ttabase2`;
+CREATE DATABASE `test-ttabase2`;
+USE `test-ttabase2`;
+
 DROP TABLE IF EXISTS `office`;
 
 CREATE TABLE `office` (
