@@ -26,9 +26,9 @@ UNIQUE KEY name (name)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `role` (name) VALUES ('ADMIN');
-INSERT INTO `role` (name) VALUES ('MANAGER');
 INSERT INTO `role` (name) VALUES ('SUPPORT');
 INSERT INTO `role` (name) VALUES ('USER');
+INSERT INTO `role` (name) VALUES ('MANAGER');
 
 DROP TABLE IF EXISTS `user`;
 
