@@ -32,6 +32,8 @@ public class User implements Serializable {
     private String lastName;
     @Column(name="active")
     private boolean isActive;
+    @Column(name="on_duty")
+    private boolean isOnDuty;
     @ManyToOne
     @JoinColumn(name = "office_id", nullable = false)
     private Office office;
@@ -50,8 +52,9 @@ public class User implements Serializable {
 
 
     public User(int id, String login, String password, boolean isTempPassword, String email,
-                String firstName, String lastName, boolean isActive, Office office, Division division,
-                Role role, boolean isFree, int ticketCounter, int rejectCounter) {
+                String firstName, String lastName, boolean isActive, boolean isOnDuty,
+                Office office, Division division, Role role, boolean isFree, int ticketCounter,
+                int rejectCounter) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -63,12 +66,14 @@ public class User implements Serializable {
         this.office = office;
         this.division = division;
         this.role = role;
+
+        this.isOnDuty = isOnDuty;
         this.isFree = isFree;
         this.ticketCounter = ticketCounter;
         this.rejectCounter = rejectCounter;
     }
 
     public User(String login, String password, String email, String firstName, String lastName, Office office, Division division, Role role) {
-        this(0, login, password, false, email, firstName, lastName, true, office, division, role, false, 0, 0);
+        this(0, login, password, false, email, firstName, lastName, true, false, office, division, role, false, 0, 0);
     }
 }
