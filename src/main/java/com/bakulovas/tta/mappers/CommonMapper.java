@@ -21,7 +21,6 @@ public class CommonMapper {
     public LoginUserDtoResponse convertToDto(User user, String token) {
         LoginUserDtoResponse response = modelMapper.map(user, LoginUserDtoResponse.class);
         response.setOffice(user.getOffice().getName());
-        response.setRole(user.getRole().getName());
         response.setToken(token);
         return response;
     }

@@ -1,25 +1,10 @@
 package com.bakulovas.tta.entity;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+public class Role {
 
-import javax.persistence.*;
-import java.io.Serializable;
-
-@Getter
-@Setter
-@NoArgsConstructor
-@Entity
-@Table(name="role")
-public class Role implements Serializable {
-
-    @Id
-    @GeneratedValue
-    @Column(name="id")
-    private int id;
-    @Column(name="name")
-    private String name;
+    public static final String ADMIN = "ADMIN";
+    public static final String SUPPORT = "SUPPORT";
+    public static final String USER = "USER";
+    public static final String MANAGER = "MANAGER";
 
 }

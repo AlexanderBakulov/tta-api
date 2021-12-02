@@ -2,6 +2,7 @@ package com.bakulovas.tta.dto.request;
 
 
 import com.bakulovas.tta.dto.validation.annotations.MinLength;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import static com.bakulovas.tta.config.ServerConfig.*;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class AddUserDtoRequest {
 
     @NotBlank
@@ -38,16 +40,5 @@ public class AddUserDtoRequest {
     @NotEmpty
     private String role;
 
-
-    public AddUserDtoRequest(String login, String password, String email, String firstName,
-                             String lastName, String office, String role) {
-        this.login = login;
-        this.password = password;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.office = office;
-        this.role = role;
-    }
 
 }

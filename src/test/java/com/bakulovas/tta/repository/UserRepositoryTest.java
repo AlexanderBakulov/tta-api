@@ -1,10 +1,8 @@
 package com.bakulovas.tta.repository;
 
 import com.bakulovas.tta.entity.Office;
-import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;
 import com.bakulovas.tta.repository.jpa.OfficeRepository;
-import com.bakulovas.tta.repository.jpa.RoleRepository;
 import com.bakulovas.tta.repository.jpa.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +22,14 @@ public class UserRepositoryTest {
     private OfficeRepository officeRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
 
     @Test
     public void testUserRepository() {
         Optional<Office> of = officeRepository.findById((int) 1);
-        Optional<Role> r = roleRepository.findById((int) 1);
         Office office = of.get();
-        Role role = r.get();
-        User u = new User("Vasya", "11aA", "a@a.a", "vasya", "Vasya", office, role);
+        User u = new User("Vasya", "11aA", "a@a.a", "vasya", "Vasya", office, "USER");
         userRepository.save(u);
         User user = userRepository.findByLogin("Vasya");
         assertEquals(u.getLogin(), user.getLogin());
