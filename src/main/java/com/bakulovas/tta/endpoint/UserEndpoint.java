@@ -26,7 +26,7 @@ public class UserEndpoint {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("login/")
     @ApiOperation(value="Login user")
     public LoginUserDtoResponse login(@Valid @RequestBody LoginUserDtoRequest request) throws ServerException {
 

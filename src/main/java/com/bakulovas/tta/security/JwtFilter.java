@@ -1,8 +1,10 @@
 package com.bakulovas.tta.security;
 
+import com.bakulovas.tta.entity.User;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -21,23 +23,25 @@ public class JwtFilter extends GenericFilterBean {
 
     public static final String AUTHORIZATION = "Authorization";
 
-    @Autowired
-    private JwtProvider jwtProvider;
+    private final JwtProvider jwtProvider;
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+    public JwtFilter(JwtProvider jwtProvider) {
+        this.jwtProvider = jwtProvider;
+    }
+
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-//        log.info("do filter...");
-//        String token = getTokenFromRequest((HttpServletRequest) servletRequest);
-//        if (token != null && jwtProvider.validateToken(token)) {
-//            String userLogin = jwtProvider.getLoginFromToken(token);
-//            CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(userLogin);
-//            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-//            SecurityContextHolder.getContext().setAuthentication(auth);
-//        }
-//        filterChain.doFilter(servletRequest, servletResponse);
+        log.info("do filter...");
+        String token = getTokenFromRequest((HttpServletRequest) servletRequest);
+        if (token != null) {
+            User user = jwtProvider.getUserFromToken(token);
+            UserDetailsImpl userDetails = UserDetailsImpl.fromUserToUserDetails(user);
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     private String getTokenFromRequest(HttpServletRequest request) {

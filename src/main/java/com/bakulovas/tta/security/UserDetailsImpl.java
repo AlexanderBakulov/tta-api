@@ -15,11 +15,11 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<? extends GrantedAuthority> grantedAuthorities;
 
     public static UserDetailsImpl fromUserToUserDetails(User user) {
-        UserDetailsImpl c = new UserDetailsImpl();
-        c.login = user.getLogin();
-        c.password = user.getPassword();
-        c.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
-        return c;
+        UserDetailsImpl userDetails = new UserDetailsImpl();
+        userDetails.login = user.getLogin();
+        userDetails.password = user.getPassword();
+        userDetails.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
+        return userDetails;
     }
 
     @Override

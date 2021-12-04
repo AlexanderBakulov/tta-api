@@ -31,22 +31,22 @@ public class JwtProvider {
                 .compact();
     }
 
-    public User parseToken(String token) {
+    public User getUserFromToken(String token) {
         try {
             Claims body = Jwts.parser()
                     .setSigningKey(jwtSecret)
                     .parseClaimsJws(token)
                     .getBody();
 
-            User u = new User();
-            u.setLogin(body.getSubject());
-            u.setId(Integer.parseInt((String) body.get("userId")));
-            u.setRole((String) body.get("role"));
-            u.setActive((boolean) body.get("isActive"));
-            u.setTempPassword((boolean) body.get("isTempPassword"));
-            u.setOffice((Office) body.get("office"));
+            User user = new User();
+            user.setLogin(body.getSubject());
+            user.setId(Integer.parseInt((String) body.get("userId")));
+            user.setRole((String) body.get("role"));
+            user.setActive((boolean) body.get("isActive"));
+            user.setTempPassword((boolean) body.get("isTempPassword"));
+            user.setOffice((Office) body.get("office"));
 
-            return u;
+            return user;
 
         } catch (JwtException | ClassCastException e) {
             return null;
