@@ -19,7 +19,6 @@ public class UserDtoResponse {
     private String firstName;
     private String lastName;
     private boolean isActive;
-    private boolean isOnDuty;
     private String office;
     private String role;
 

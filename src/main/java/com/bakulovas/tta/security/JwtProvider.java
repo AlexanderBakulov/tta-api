@@ -1,6 +1,5 @@
 package com.bakulovas.tta.security;
 
-import com.bakulovas.tta.entity.Office;
 import com.bakulovas.tta.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -17,13 +16,13 @@ public class JwtProvider {
     @Value("$(jwt.secret)")
     private String jwtSecret;
 
-    public String generateToken(User u) {
-        Claims claims = Jwts.claims().setSubject(u.getLogin());
-        claims.put("userId", u.getId());
-        claims.put("isActive", u.isActive());
-        claims.put("isTempPassword", u.isTempPassword());
-        claims.put("office", u.getOffice());
-        claims.put("role", u.getRole());
+    public String generateToken(User user) {
+        Claims claims = Jwts.claims().setSubject(user.getLogin());
+        claims.put("userId", user.getId());
+        claims.put("isActive", user.isActive());
+        claims.put("isTempPassword", user.isTempPassword());
+        claims.put("officeId", user.getOfficeId());
+        claims.put("role", user.getRole());
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -44,7 +43,7 @@ public class JwtProvider {
             user.setRole((String) body.get("role"));
             user.setActive((boolean) body.get("isActive"));
             user.setTempPassword((boolean) body.get("isTempPassword"));
-            user.setOffice((Office) body.get("office"));
+            user.setOfficeId((int) body.get("officeId"));
 
             return user;
 

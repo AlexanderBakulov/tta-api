@@ -34,7 +34,6 @@ public class UserOptions implements Serializable {
                        int rejectCounter, User user) {
         this.id = id;
         this.isFree = isFree;
-        this.isOnDuty = isOnDuty;
         this.ticketCounter = ticketCounter;
         this.rejectCounter = rejectCounter;
         this.user = user;

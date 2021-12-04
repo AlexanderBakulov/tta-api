@@ -45,7 +45,6 @@ DROP TABLE IF EXISTS `options`;
 CREATE TABLE `options` (
 id INT NOT NULL AUTO_INCREMENT,
 free BOOLEAN DEFAULT TRUE,
-on_duty BOOLEAN DEFAULT FALSE,
 ticket_counter INT DEFAULT 0,
 reject_counter INT DEFAULT 0,
 user_id INT,

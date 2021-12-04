@@ -1,12 +1,16 @@
 package com.bakulovas.tta.serviceimpl;
 
 
+import com.bakulovas.tta.dto.request.AddUserDtoRequest;
 import com.bakulovas.tta.dto.request.LoginUserDtoRequest;
 import com.bakulovas.tta.dto.response.LoginUserDtoResponse;
+import com.bakulovas.tta.dto.response.UserDtoResponse;
+import com.bakulovas.tta.entity.Office;
 import com.bakulovas.tta.entity.User;
 import com.bakulovas.tta.errors.ServerError;
 import com.bakulovas.tta.errors.ServerException;
 import com.bakulovas.tta.mappers.CommonMapper;
+import com.bakulovas.tta.repository.jpa.OfficeRepository;
 import com.bakulovas.tta.repository.jpa.UserOptionsRepository;
 import com.bakulovas.tta.repository.jpa.UserRepository;
 import com.bakulovas.tta.security.JwtProvider;
@@ -26,13 +30,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final OfficeRepository officeRepository;
     private final UserOptionsRepository userOptionsRepository;
     private final CommonMapper commonMapper;
     private final JwtProvider jwtProvider;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserOptionsRepository userOptionsRepository, CommonMapper commonMapper, JwtProvider jwtProvider) {
+    public UserServiceImpl(UserRepository userRepository, OfficeRepository officeRepository, UserOptionsRepository userOptionsRepository, CommonMapper commonMapper, JwtProvider jwtProvider) {
         this.userRepository = userRepository;
+        this.officeRepository = officeRepository;
         this.userOptionsRepository = userOptionsRepository;
         this.commonMapper = commonMapper;
         this.jwtProvider = jwtProvider;
@@ -42,15 +48,28 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public LoginUserDtoResponse loginUser(LoginUserDtoRequest request) throws ServerException {
         User user = getUser(request);
-        String token = jwtProvider.generateToken(user);;
+        String token = jwtProvider.generateToken(user);
+        String officeName = officeRepository.getById(user.getOfficeId()).getName();
         log.info("LOGIN user with id " + user.getId());
-        return commonMapper.convertToDto(user, token);
+        return commonMapper.convertToDto(user, token, officeName);
     }
 
     @Override
     @Transactional
     public User findByLogin(String login) {
         return userRepository.findByLogin(login);
+    }
+
+    @Override
+    @Transactional
+    public UserDtoResponse addUser(AddUserDtoRequest request) throws ServerException {
+        Office office = officeRepository.findByName(request.getOffice());
+        if(office == null) {
+            throw new ServerException(ServerError.INCORRECT_OFFICE_NAME);
+        }
+        User user = commonMapper.convertToUser(request,office.getId());
+        userRepository.save(user);
+        return commonMapper.convertToDto(user, office.getName());
     }
 
     private User getUser(LoginUserDtoRequest request) throws ServerException {
