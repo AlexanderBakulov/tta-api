@@ -6,6 +6,7 @@ import com.bakulovas.tta.dto.request.LoginUserDtoRequest;
 import com.bakulovas.tta.dto.response.LoginUserDtoResponse;
 import com.bakulovas.tta.dto.response.UserDtoResponse;
 import com.bakulovas.tta.entity.Office;
+import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;
 import com.bakulovas.tta.errors.ServerError;
 import com.bakulovas.tta.errors.ServerException;
@@ -63,6 +64,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDtoResponse addUser(AddUserDtoRequest request) throws ServerException {
+        validateRole(request.getRole());
         Office office = officeRepository.findByName(request.getOffice());
         if(office == null) {
             throw new ServerException(ServerError.INCORRECT_OFFICE_NAME);
@@ -81,5 +83,14 @@ public class UserServiceImpl implements UserService {
             throw new ServerException(ServerError.INACTIVE_USER);
         }
         return user;
+    }
+
+    private void validateRole(String role) throws ServerException {
+        if(role == null) {
+            throw new ServerException(ServerError.EMPTY_ROLE);
+        }
+        if(!role.equals(Role.USER) && !role.equals(Role.MANAGER) && !role.equals(Role.SUPPORT) && !role.equals(Role.ADMIN)) {
+            throw new ServerException(ServerError.INCORRECT_ROLE);
+        }
     }
 }

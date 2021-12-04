@@ -36,6 +36,8 @@ public class CommonMapper {
     public User convertToUser(AddUserDtoRequest request, int officeId) {
         User user = modelMapper.map(request, User.class);
         user.setOfficeId(officeId);
+        user.setActive(true);
+        user.setTempPassword(true);
         return user;
     }
 

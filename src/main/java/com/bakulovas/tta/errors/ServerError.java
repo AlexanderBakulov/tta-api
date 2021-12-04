@@ -5,6 +5,7 @@ public enum ServerError {
     USER_NOT_AUTHORIZED("User not authorized"),
     USER_NOT_AUTHENTICATED("User not authenticated."),
     INCORRECT_ROLE("Incorrect role."),
+    EMPTY_ROLE("Empty role field."),
     INCORRECT_OFFICE_NAME("There is no office with this name."),
     INCORRECT_DIVISION_NAME("There is no division with this name."),
     INACTIVE_USER("Inactive user."),
