@@ -39,7 +39,7 @@ public class JwtProvider {
 
             User user = new User();
             user.setLogin(body.getSubject());
-            user.setId(Integer.parseInt((String) body.get("userId")));
+            user.setId((Integer) body.get("userId"));
             user.setRole((String) body.get("role"));
             user.setActive((boolean) body.get("isActive"));
             user.setTempPassword((boolean) body.get("isTempPassword"));

@@ -10,11 +10,11 @@ import javax.validation.ConstraintValidatorContext;
 
 public class MinLengthValidator implements ConstraintValidator<MinLength, String> {
 
-    private final ServerConfig serverConfiguration;
+    private final ServerConfig serverConfig;
 
     @Autowired
     public MinLengthValidator(ServerConfig serverConfiguration) {
-        this.serverConfiguration = serverConfiguration;
+        this.serverConfig = serverConfiguration;
     }
 
     @Override
@@ -25,8 +25,8 @@ public class MinLengthValidator implements ConstraintValidator<MinLength, String
     public boolean isValid(String field,
                            ConstraintValidatorContext cxt) {
         cxt.disableDefaultConstraintViolation();
-        cxt.buildConstraintViolationWithTemplate("Length must be lager or equals then " + serverConfiguration.getMinPasswordLength()).addConstraintViolation();
-        return field.length() >= serverConfiguration.getMinPasswordLength();
+        cxt.buildConstraintViolationWithTemplate("Length must be lager or equals then " + serverConfig.getMinPasswordLength()).addConstraintViolation();
+        return field.length() >= serverConfig.getMinPasswordLength();
 
     }
 
