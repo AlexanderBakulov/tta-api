@@ -9,6 +9,7 @@ import com.bakulovas.tta.errors.ServerException;
 import com.bakulovas.tta.mappers.CommonMapper;
 import com.bakulovas.tta.repository.jpa.UserOptionsRepository;
 import com.bakulovas.tta.repository.jpa.UserRepository;
+import com.bakulovas.tta.security.JwtProvider;
 import com.bakulovas.tta.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,19 +28,21 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserOptionsRepository userOptionsRepository;
     private final CommonMapper commonMapper;
+    private final JwtProvider jwtProvider;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserOptionsRepository userOptionsRepository, CommonMapper commonMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserOptionsRepository userOptionsRepository, CommonMapper commonMapper, JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.userOptionsRepository = userOptionsRepository;
         this.commonMapper = commonMapper;
+        this.jwtProvider = jwtProvider;
     }
 
     @Override
     @Transactional
     public LoginUserDtoResponse loginUser(LoginUserDtoRequest request) throws ServerException {
         User user = getUser(request);
-        String token = "";
+        String token = jwtProvider.generateToken(user);;
         log.info("LOGIN user with id " + user.getId());
         return commonMapper.convertToDto(user, token);
     }
@@ -52,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     private User getUser(LoginUserDtoRequest request) throws ServerException {
         User user = findByLogin(request.getLogin());
-        if(user == null || request.getPassword() != user.getPassword()) {
+        if(user == null || !request.getPassword().equals(user.getPassword())) {
             throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
         }
         if(!user.isActive()) {
