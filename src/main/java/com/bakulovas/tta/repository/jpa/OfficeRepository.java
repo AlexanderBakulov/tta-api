@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OfficeRepository extends JpaRepository<Office, Integer> {
-    Office findByName(String name);
+    Office getByName(String name);
 }

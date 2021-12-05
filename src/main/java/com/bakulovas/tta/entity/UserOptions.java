@@ -20,8 +20,6 @@ public class UserOptions implements Serializable {
     private int id;
     @Column(name="free")
     private boolean isFree;
-    @Column(name="on_duty")
-    private boolean isOnDuty;
     @Column(name="ticket_counter")
     private int ticketCounter;
     @Column(name="reject_counter")

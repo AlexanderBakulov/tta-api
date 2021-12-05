@@ -58,14 +58,14 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User findByLogin(String login) {
-        return userRepository.findByLogin(login);
+        return userRepository.getByLogin(login);
     }
 
     @Override
     @Transactional
     public UserDtoResponse addUser(AddUserDtoRequest request) throws ServerException {
         validateRole(request.getRole());
-        Office office = officeRepository.findByName(request.getOffice());
+        Office office = officeRepository.getByName(request.getOffice());
         if(office == null) {
             throw new ServerException(ServerError.INCORRECT_OFFICE_NAME);
         }

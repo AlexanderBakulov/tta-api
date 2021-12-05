@@ -1,6 +1,5 @@
 package com.bakulovas.tta.repository;
 
-import com.bakulovas.tta.entity.Office;
 import com.bakulovas.tta.entity.User;
 import com.bakulovas.tta.repository.jpa.OfficeRepository;
 import com.bakulovas.tta.repository.jpa.UserRepository;
@@ -28,30 +27,38 @@ public class UserRepositoryTest {
 
         User u = new User("Vasya", "11aA", "a@a.a", "vasya", "Vasya", 1, "USER");
         userRepository.save(u);
-        User user = userRepository.findByLogin("Vasya");
+        User user = userRepository.getByLogin("Vasya");
         assertEquals(u.getLogin(), user.getLogin());
         userRepository.delete(u);
     }
 
     @Test
     public void testUserRepository_incorrectUser() {
-        assertNull(userRepository.findByLogin("Petya"));
+        assertNull(userRepository.getByLogin("Petya"));
     }
 
 
     @Test
-    public void testFindByLogin() {
+    public void testGetByLogin() {
         String login = "manager";
-        User user = userRepository.findByLogin(login);
+        User user = userRepository.getByLogin(login);
         assertEquals(login, user.getLogin());
     }
 
     @Test
-    public void testFindByLogin_wrongLogin() {
+    public void testGetByLogin_wrongLogin() {
         String login = "Wrong";
-        User user = userRepository.findByLogin(login);
+        User user = userRepository.getByLogin(login);
         assertNull(user);
 
+    }
+
+    @Test
+    public void testGetById() {
+        int id = 3;
+        User user = userRepository.getById(id);
+        assertEquals(id, user.getId());
+        System.out.println(user.getFirstName());
     }
 
 }
