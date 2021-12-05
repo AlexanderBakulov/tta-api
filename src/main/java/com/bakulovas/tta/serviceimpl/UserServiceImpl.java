@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User findByLogin(String login) {
+    public User getByLogin(String login) {
         return userRepository.getByLogin(login);
     }
 
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private User getUser(LoginUserDtoRequest request) throws ServerException {
-        User user = findByLogin(request.getLogin());
+        User user = getByLogin(request.getLogin());
         if(user == null || !request.getPassword().equals(user.getPassword())) {
             throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
         }

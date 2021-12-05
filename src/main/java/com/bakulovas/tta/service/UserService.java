@@ -12,7 +12,7 @@ public interface UserService {
 
     LoginUserDtoResponse loginUser(LoginUserDtoRequest request) throws ServerException;
 
-    User findByLogin(String username);
+    User getByLogin(String username);
 
     UserDtoResponse addUser(AddUserDtoRequest request) throws ServerException;
 
