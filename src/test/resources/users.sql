@@ -1,5 +1,5 @@
 INSERT INTO `user` (login, password, email, first_name, last_name, role, office_id)
-VALUES ('user', '', 'user@tta.com', 'Ivan', 'Ivanov', 'USER',1);
+VALUES ('user', '', 'user@tta.com', 'Ivan', 'Ivanov', 'USER', 1);
 
 INSERT INTO `user` (login, password, email, first_name, last_name, role, office_id)
 VALUES ('manager', '', 'boss@tta.com', 'Angry', 'Boss', 'MANAGER', 1);

@@ -3,12 +3,11 @@ package com.bakulovas.tta.repository;
 
 import com.bakulovas.tta.entity.Office;
 import com.bakulovas.tta.entity.User;
-import com.bakulovas.tta.repository.jpa.OfficeRepository;
-import com.bakulovas.tta.repository.jpa.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 @SpringBootTest
+@Transactional
 @Sql({"/test-ttabase.sql"})
 public class OfficeRepositoryTest {
 
@@ -31,7 +31,7 @@ public class OfficeRepositoryTest {
     @Test
     public void testRepository() {
 
-        User user = new User("login", "password", "email", "firstname", "lastname", 1, "USER");
+        User user = new User("login", "password", "email", "firstname", "lastname", "USER", 1);
         userRepository.save(user);
         User userFromDb = userRepository.getByLogin(user.getLogin());
         assertEquals(user.getId(), userFromDb.getId());

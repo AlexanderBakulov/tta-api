@@ -2,16 +2,17 @@ package com.bakulovas.tta.repository;
 
 import com.bakulovas.tta.entity.User;
 import com.bakulovas.tta.entity.UserOptions;
-import com.bakulovas.tta.repository.jpa.UserOptionsRepository;
-import com.bakulovas.tta.repository.jpa.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
+@Transactional
 @Sql({"/test-ttabase.sql", "/users.sql"})
 public class UserOptionsRepositoryTest {
 
@@ -25,6 +26,7 @@ public class UserOptionsRepositoryTest {
 
 
     @Test
+    @Transactional
     public void testUserOptionsRepository() {
         User user = userRepository.getById(3);
         UserOptions userOptions = new UserOptions();
@@ -35,6 +37,7 @@ public class UserOptionsRepositoryTest {
         userOptionsRepository.save(userOptions);
         UserOptions optionsFromDB = userOptionsRepository.getByUser(user);
         assertEquals(user, optionsFromDB.getUser());
+        System.out.println("++++++++OPTION ID " + optionsFromDB.getId());
 
     }
 

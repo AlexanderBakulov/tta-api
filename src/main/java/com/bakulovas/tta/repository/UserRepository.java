@@ -1,4 +1,4 @@
-package com.bakulovas.tta.repository.jpa;
+package com.bakulovas.tta.repository;
 
 
 import com.bakulovas.tta.entity.User;
@@ -10,5 +10,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 
     User getByLogin(String login);
+
+    User getById(int id);
 
 }

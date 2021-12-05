@@ -1,17 +1,17 @@
 package com.bakulovas.tta.repository;
 
 import com.bakulovas.tta.entity.User;
-import com.bakulovas.tta.repository.jpa.OfficeRepository;
-import com.bakulovas.tta.repository.jpa.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 @Sql({"/test-ttabase.sql", "/users.sql"})
 public class UserRepositoryTest {
 
@@ -25,7 +25,7 @@ public class UserRepositoryTest {
     @Test
     public void testUserRepository() {
 
-        User u = new User("Vasya", "11aA", "a@a.a", "vasya", "Vasya", 1, "USER");
+        User u = new User("Vasya", "11aA", "a@a.a", "vasya", "Vasya", "USER", 1);
         userRepository.save(u);
         User user = userRepository.getByLogin("Vasya");
         assertEquals(u.getLogin(), user.getLogin());

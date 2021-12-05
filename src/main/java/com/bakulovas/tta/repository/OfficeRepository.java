@@ -1,4 +1,4 @@
-package com.bakulovas.tta.repository.jpa;
+package com.bakulovas.tta.repository;
 
 
 import com.bakulovas.tta.entity.Office;

@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS `test-ttabase2`;
-CREATE DATABASE `test-ttabase2`;
-USE `test-ttabase2`;
+DROP DATABASE IF EXISTS `test-ttabase`;
+CREATE DATABASE `test-ttabase`;
+USE `test-ttabase`;
 
 DROP TABLE IF EXISTS `office`;
 
