@@ -2,6 +2,7 @@ package com.bakulovas.tta.repository;
 
 
 import com.bakulovas.tta.entity.Office;
+import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class OfficeRepositoryTest {
 
     @Autowired
     private OfficeRepository officeRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -30,8 +33,10 @@ public class OfficeRepositoryTest {
 
     @Test
     public void testRepository() {
-
-        User user = new User("login", "password", "email", "firstname", "lastname", "USER", 1);
+        Role role = roleRepository.getById(3);
+        Office office = officeRepository.getById(1);
+        User user = new User("login", "password", "email",
+                "firstname", "lastname", office, role);
         userRepository.save(user);
         User userFromDb = userRepository.getByLogin(user.getLogin());
         assertEquals(user.getId(), userFromDb.getId());
