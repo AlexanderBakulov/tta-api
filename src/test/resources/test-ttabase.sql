@@ -16,6 +16,21 @@ INSERT INTO `office` (name, time_zone) VALUES ('MSK', 3);
 INSERT INTO `office` (name, time_zone) VALUES ('SPB', 3);
 INSERT INTO `office` (name, time_zone) VALUES ('NSK', 7);
 
+DROP TABLE IF EXISTS `role`;
+
+CREATE TABLE `role` (
+id INT NOT NULL AUTO_INCREMENT,
+name VARCHAR(30) NOT NULL,
+PRIMARY KEY (id),
+UNIQUE KEY name (name)
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `role` (name) VALUES ('ADMIN');
+INSERT INTO `role` (name) VALUES ('SUPPORT');
+INSERT INTO `role` (name) VALUES ('USER');
+INSERT INTO `role` (name) VALUES ('MANAGER');
+
+
 DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
@@ -27,18 +42,19 @@ email VARCHAR(64) NOT NULL,
 first_name VARCHAR(32) NOT NULL,
 last_name VARCHAR(32) NOT NULL,
 active BOOLEAN NOT NULL DEFAULT TRUE,
-role VARCHAR(16) DEFAULT NULL,
 office_id INT,
+role_id INT,
 PRIMARY KEY (id),
 UNIQUE KEY login (login),
 UNIQUE KEY email (email),
 KEY first_name (first_name),
 KEY last_name (last_name),
-FOREIGN KEY (office_id) REFERENCES office (id)
+FOREIGN KEY (office_id) REFERENCES office (id),
+FOREIGN KEY (role_id) REFERENCES role (id)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `user` (login, password, email, first_name, last_name, role, office_id)
-VALUES ('admin', 'pass', 'admin@tta.com', 'admin', 'admin', 'ADMIN', 1);
+INSERT INTO `user` (login, password, email, first_name, last_name, office_id, role_id)
+VALUES ('admin', 'pass', 'admin@tta.com', 'admin', 'admin', 1, 1);
 
 DROP TABLE IF EXISTS `options`;
 
