@@ -1,11 +1,16 @@
 package com.bakulovas.tta.security;
 
+import com.bakulovas.tta.entity.Office;
+import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;
+import com.bakulovas.tta.repository.OfficeRepository;
+import com.bakulovas.tta.repository.RoleRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,13 +21,22 @@ public class JwtProvider {
     @Value("$(jwt.secret)")
     private String jwtSecret;
 
+    private final RoleRepository roleRepository;
+    private final OfficeRepository officeRepository;
+
+    @Autowired
+    public JwtProvider(RoleRepository roleRepository, OfficeRepository officeRepository) {
+        this.roleRepository = roleRepository;
+        this.officeRepository = officeRepository;
+    }
+
     public String generateToken(User user) {
         Claims claims = Jwts.claims().setSubject(user.getLogin());
         claims.put("userId", user.getId());
         claims.put("isActive", user.isActive());
         claims.put("isTempPassword", user.isTempPassword());
-        claims.put("officeId", user.getOfficeId());
-        claims.put("role", user.getRole());
+        claims.put("office", user.getOffice().getName());
+        claims.put("role", user.getRole().getName());
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -36,15 +50,16 @@ public class JwtProvider {
                     .setSigningKey(jwtSecret)
                     .parseClaimsJws(token)
                     .getBody();
+            Office office = officeRepository.getByName(String.valueOf(body.get("office")));
+            Role role = roleRepository.getByName(String.valueOf(body.get("role")));
 
             User user = new User();
             user.setLogin(body.getSubject());
             user.setId((Integer) body.get("userId"));
-            user.setRole((String) body.get("role"));
             user.setActive((boolean) body.get("isActive"));
             user.setTempPassword((boolean) body.get("isTempPassword"));
-            user.setOfficeId((int) body.get("officeId"));
-
+            user.setOffice(office);
+            user.setRole(role);
             return user;
 
         } catch (JwtException | ClassCastException e) {
