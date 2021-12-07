@@ -1,5 +1,6 @@
 package com.bakulovas.tta.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="options")
 public class UserOptions implements Serializable {
@@ -28,12 +30,4 @@ public class UserOptions implements Serializable {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public UserOptions(int id, boolean isFree, boolean isOnDuty, int ticketCounter,
-                       int rejectCounter, User user) {
-        this.id = id;
-        this.isFree = isFree;
-        this.ticketCounter = ticketCounter;
-        this.rejectCounter = rejectCounter;
-        this.user = user;
-    }
 }

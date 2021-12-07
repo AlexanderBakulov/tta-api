@@ -34,15 +34,16 @@ public class User implements Serializable {
     private String lastName;
     @Column(name="active")
     private boolean isActive;
-    @Column(name="role")
-    private String role;
-    @Column(name="office_id")
-    private int officeId;
-
+    @ManyToOne
+    @JoinColumn(name = "office_id", nullable = false)
+    private Office office;
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
 
     public User(String login, String password, String email, String firstName, String lastName,
-             String role, int officeId) {
-        this(0, login, password, false, email, firstName, lastName, true, role, officeId);
+             Office office, Role role) {
+        this(0, login, password, false, email, firstName, lastName, true, office, role);
     }
 }

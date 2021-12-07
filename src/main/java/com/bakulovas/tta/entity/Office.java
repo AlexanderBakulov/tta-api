@@ -1,6 +1,5 @@
 package com.bakulovas.tta.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
