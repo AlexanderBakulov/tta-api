@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.*;
 
 
-import static com.bakulovas.tta.config.ServerConfig.*;
+import static com.bakulovas.tta.config.StaticData.*;
 
 @Getter
 @NoArgsConstructor

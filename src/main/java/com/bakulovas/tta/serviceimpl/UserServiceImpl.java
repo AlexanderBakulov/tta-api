@@ -71,6 +71,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = commonMapper.convertToUser(request,office.getId());
         userRepository.save(user);
+        log.info("Add user with id " + user.getId());
         return commonMapper.convertToDto(user, office.getName());
     }
 

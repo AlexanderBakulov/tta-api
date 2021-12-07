@@ -1,21 +1,15 @@
 package com.bakulovas.tta.config;
 
-
-
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.context.annotation.PropertySource;
 
 @Getter
-@Configuration
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application.yml")
+@ConfigurationProperties(prefix = "tta")
+@ConstructorBinding
 public class ServerConfig {
-
-    public static final String INVALID_PASSWORD = "Password must contains at least one lowercase letter, one uppercase letter and one digit.";
-    public static final String INVALID_LOGIN = "Login must contains only latin letters";
-    public static final String PASSWORD_VALIDATION_REGEXP = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$";
-    public static final String NAME_VALIDATION_REGEXP = "^[A-Za-z]+$";
 
     private final int minPasswordLength;
     private final int lowPriorityTimer;
@@ -27,16 +21,9 @@ public class ServerConfig {
     private final int lunchEndHour;
     private final int confirmTimer;
 
-
-    public ServerConfig(@Value("${tta.min_password_length}") int minPasswordLength,
-                        @Value("${tta.low_priority_timer}") int lowPriorityTimer,
-                        @Value("${tta.medium_priority_timer}") int mediumPriorityTimer,
-                        @Value("${tta.critical_priority_timer}") int criticalPriorityTimer,
-                        @Value("${tta.work_start_hour}") int workStartHour,
-                        @Value("${tta.work_end_hour}") int workEndHour,
-                        @Value("${tta.lunch_start_hour}") int lunchStartHour,
-                        @Value("${tta.lunch_end_hour}") int lunchEndHour,
-                        @Value("${tta.confirm_timer}") int confirmTimer) {
+    public ServerConfig(int minPasswordLength, int lowPriorityTimer, int mediumPriorityTimer,
+                        int criticalPriorityTimer, int workStartHour, int workEndHour,
+                        int lunchStartHour, int lunchEndHour, int confirmTimer) {
         this.minPasswordLength = minPasswordLength;
         this.lowPriorityTimer = lowPriorityTimer;
         this.mediumPriorityTimer = mediumPriorityTimer;
@@ -47,7 +34,5 @@ public class ServerConfig {
         this.lunchEndHour = lunchEndHour;
         this.confirmTimer = confirmTimer;
     }
-
-
 
 }

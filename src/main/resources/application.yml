@@ -1,0 +1,68 @@
+#Database
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ttabase2?useUnicode=yes&characterEncoding=UTF8&useSSL=false&serverTimezone=GMT&useLegacyDatetimeCode=false
+    username: test
+    password: test
+
+#Hibernate
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        id:
+          new_generator_mappings: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+logging:
+  file:
+    max-history: 1
+    name: tta.log
+  level:
+    org:
+      hibernate:
+        nodeValue: INFO
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+      springframework:
+        web: INFO
+        jdbc:
+          core:
+            JdbcTemplate: DEBUG
+            StatementCreatorUtils: TRACE
+  pattern:
+    file: '%d{yyyy-MM-dd HH:mm:ss, GMT} [%thread] %-5level %logger{36} - %msg%n'
+    console: '%d{yyyy-MM-dd HH:mm:ss, GMT} - %msg%n'
+
+  
+#server port
+server:
+  port: 8080
+
+#app properties
+tta:
+  min_password_length: 3
+  low_priority_timer: 16
+  medium_priority_timer: 8
+  critical_priority_timer: 2
+  work_start_hour: 8
+  work_end_hour: 17
+  lunch_start_hour: 12
+  lunch_end_hour: 13
+  confirm_timer: 24
+  
+#Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+jwt:
+  secret: supersecret
