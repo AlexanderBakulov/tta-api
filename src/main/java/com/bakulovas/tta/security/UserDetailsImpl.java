@@ -18,7 +18,7 @@ public class UserDetailsImpl implements UserDetails {
         UserDetailsImpl userDetails = new UserDetailsImpl();
         userDetails.login = user.getLogin();
         userDetails.password = user.getPassword();
-        userDetails.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
+        userDetails.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getName()));
         return userDetails;
     }
 
