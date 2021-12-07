@@ -7,7 +7,6 @@ public enum ServerError {
     INCORRECT_ROLE("Incorrect role."),
     EMPTY_ROLE("Empty role field."),
     INCORRECT_OFFICE_NAME("There is no office with this name."),
-    INCORRECT_DIVISION_NAME("There is no division with this name."),
     INACTIVE_USER("Inactive user."),
     INCORRECT_TOKEN("Incorrect token."),
     INCORRECT_LOGIN_OR_PASSWORD("Incorrect login or password."),

@@ -50,6 +50,7 @@ public class JwtProvider {
                     .setSigningKey(jwtSecret)
                     .parseClaimsJws(token)
                     .getBody();
+
             Office office = officeRepository.getByName(String.valueOf(body.get("office")));
             Role role = roleRepository.getByName(String.valueOf(body.get("role")));
 
@@ -62,7 +63,7 @@ public class JwtProvider {
             user.setRole(role);
             return user;
 
-        } catch (JwtException | ClassCastException e) {
+        } catch (JwtException | ClassCastException | NullPointerException e) {
             return null;
         }
     }
