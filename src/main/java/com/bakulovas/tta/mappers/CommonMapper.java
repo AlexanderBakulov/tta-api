@@ -4,6 +4,8 @@ package com.bakulovas.tta.mappers;
 import com.bakulovas.tta.dto.request.AddUserDtoRequest;
 import com.bakulovas.tta.dto.response.LoginUserDtoResponse;
 import com.bakulovas.tta.dto.response.UserDtoResponse;
+import com.bakulovas.tta.entity.Office;
+import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,4 +37,11 @@ public class CommonMapper {
         return response;
     }
 
+
+    public User convertToUser(AddUserDtoRequest request, Office office, Role role) {
+        User user = modelMapper.map(request, User.class);
+        user.setOffice(office);
+        user.setRole(role);
+        return user;
+    }
 }

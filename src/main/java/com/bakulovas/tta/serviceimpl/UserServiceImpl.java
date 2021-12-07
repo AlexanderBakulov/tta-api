@@ -12,6 +12,7 @@ import com.bakulovas.tta.errors.ServerError;
 import com.bakulovas.tta.errors.ServerException;
 import com.bakulovas.tta.mappers.CommonMapper;
 import com.bakulovas.tta.repository.OfficeRepository;
+import com.bakulovas.tta.repository.RoleRepository;
 import com.bakulovas.tta.repository.UserOptionsRepository;
 import com.bakulovas.tta.repository.UserRepository;
 import com.bakulovas.tta.security.JwtProvider;
@@ -32,14 +33,18 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final OfficeRepository officeRepository;
+    private final RoleRepository roleRepository;
     private final UserOptionsRepository userOptionsRepository;
     private final CommonMapper commonMapper;
     private final JwtProvider jwtProvider;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, OfficeRepository officeRepository, UserOptionsRepository userOptionsRepository, CommonMapper commonMapper, JwtProvider jwtProvider) {
+    public UserServiceImpl(UserRepository userRepository, OfficeRepository officeRepository,
+                           RoleRepository roleRepository, UserOptionsRepository userOptionsRepository,
+                           CommonMapper commonMapper, JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.officeRepository = officeRepository;
+        this.roleRepository = roleRepository;
         this.userOptionsRepository = userOptionsRepository;
         this.commonMapper = commonMapper;
         this.jwtProvider = jwtProvider;
@@ -50,9 +55,8 @@ public class UserServiceImpl implements UserService {
     public LoginUserDtoResponse loginUser(LoginUserDtoRequest request) throws ServerException {
         User user = getUser(request);
         String token = jwtProvider.generateToken(user);
-        String officeName = officeRepository.getById(user.getOfficeId()).getName();
         log.info("LOGIN user with id " + user.getId());
-        return commonMapper.convertToDto(user, token, officeName);
+        return commonMapper.convertToDto(user, token);
     }
 
     @Override
@@ -64,15 +68,18 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDtoResponse addUser(AddUserDtoRequest request) throws ServerException {
-        validateRole(request.getRole());
         Office office = officeRepository.getByName(request.getOffice());
         if(office == null) {
             throw new ServerException(ServerError.INCORRECT_OFFICE_NAME);
         }
-        User user = commonMapper.convertToUser(request,office.getId());
+        Role role = roleRepository.getByName(request.getRole());
+        if(role == null) {
+            throw new ServerException(ServerError.INCORRECT_ROLE);
+        }
+        User user = commonMapper.convertToUser(request, office, role);
         userRepository.save(user);
         log.info("Add user with id " + user.getId());
-        return commonMapper.convertToDto(user, office.getName());
+        return commonMapper.convertToDto(user);
     }
 
     private User getUser(LoginUserDtoRequest request) throws ServerException {
@@ -90,7 +97,7 @@ public class UserServiceImpl implements UserService {
         if(role == null) {
             throw new ServerException(ServerError.EMPTY_ROLE);
         }
-        if(!role.equals(Role.USER) && !role.equals(Role.MANAGER) && !role.equals(Role.SUPPORT) && !role.equals(Role.ADMIN)) {
+        if(!role.equals("USER") && !role.equals("MANAGER") && !role.equals("SUPPORT") && !role.equals("ADMIN")) {
             throw new ServerException(ServerError.INCORRECT_ROLE);
         }
     }
