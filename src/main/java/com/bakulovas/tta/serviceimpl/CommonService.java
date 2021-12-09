@@ -5,7 +5,9 @@ import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;
 import com.bakulovas.tta.errors.ServerError;
 import com.bakulovas.tta.errors.ServerException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CommonService {
 
     public void validatePassword(User user, String password) throws ServerException {
