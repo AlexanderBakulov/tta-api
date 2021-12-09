@@ -11,8 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -49,14 +49,7 @@ public class CommonMapper {
     }
 
     public Set<UserDtoResponse> usersToDto(Set<User> users) {
-        Set<UserDtoResponse> response = new HashSet<>();
-        if(users.isEmpty()) {
-            return response;
-        }
-        for(User user : users) {
-            UserDtoResponse userDtoResponse = convertToDto(user);
-            response.add(userDtoResponse);
-        }
-        return response;
+        return users.stream().map(this::convertToDto).collect(Collectors.toSet());
     }
+
 }
