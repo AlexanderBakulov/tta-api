@@ -36,24 +36,33 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final UserOptionsRepository userOptionsRepository;
     private final CommonMapper commonMapper;
+    private final CommonService commonService;
     private final JwtProvider jwtProvider;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, OfficeRepository officeRepository,
                            RoleRepository roleRepository, UserOptionsRepository userOptionsRepository,
-                           CommonMapper commonMapper, JwtProvider jwtProvider) {
+                           CommonMapper commonMapper, CommonService commonService, JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.officeRepository = officeRepository;
         this.roleRepository = roleRepository;
         this.userOptionsRepository = userOptionsRepository;
         this.commonMapper = commonMapper;
+        this.commonService = commonService;
         this.jwtProvider = jwtProvider;
     }
 
     @Override
     @Transactional
     public LoginUserDtoResponse loginUser(LoginUserDtoRequest request) throws ServerException {
-        User user = getUser(request);
+        User user = getUser(request.getLogin());
+        if(user == null) {
+            throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
+        }
+        commonService.validatePassword(user, request.getPassword());
+        if(!user.isActive()) {
+            throw new ServerException(ServerError.INACTIVE_USER);
+        }
         String token = jwtProvider.generateToken(user);
         log.info("LOGIN user with id " + user.getId());
         return commonMapper.convertToDto(user, token);
@@ -61,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User getByLogin(String login) {
+    public User getUser(String login) {
         return userRepository.getByLogin(login);
     }
 
@@ -69,36 +78,27 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDtoResponse addUser(AddUserDtoRequest request) throws ServerException {
         Office office = officeRepository.getByName(request.getOffice());
-        if(office == null) {
-            throw new ServerException(ServerError.INCORRECT_OFFICE_NAME);
-        }
+        commonService.isEmpty(office);
         Role role = roleRepository.getByName(request.getRole());
-        if(role == null) {
-            throw new ServerException(ServerError.INCORRECT_ROLE);
-        }
+        commonService.isEmpty(role);
         User user = commonMapper.convertToUser(request, office, role);
         userRepository.save(user);
-        log.info("Add user with id " + user.getId());
+        log.info("ADD user with id " + user.getId());
         return commonMapper.convertToDto(user);
     }
 
-    private User getUser(LoginUserDtoRequest request) throws ServerException {
-        User user = getByLogin(request.getLogin());
-        if(user == null || !request.getPassword().equals(user.getPassword())) {
-            throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
+    @Override
+    @Transactional
+    public UserDtoResponse getUser(int id) throws ServerException {
+        User user = userRepository.getById(id);
+        if(user == null) {
+            throw new ServerException(ServerError.USER_NOT_FOUND);
         }
-        if(!user.isActive()) {
-            throw new ServerException(ServerError.INACTIVE_USER);
-        }
-        return user;
+        log.info("GET user with id " + user.getId());
+        return commonMapper.convertToDto(user);
     }
 
-    private void validateRole(String role) throws ServerException {
-        if(role == null) {
-            throw new ServerException(ServerError.EMPTY_ROLE);
-        }
-        if(!role.equals("USER") && !role.equals("MANAGER") && !role.equals("SUPPORT") && !role.equals("ADMIN")) {
-            throw new ServerException(ServerError.INCORRECT_ROLE);
-        }
-    }
+
+
+
 }

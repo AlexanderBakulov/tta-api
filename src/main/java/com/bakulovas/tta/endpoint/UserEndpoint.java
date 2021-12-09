@@ -10,9 +10,11 @@ import com.bakulovas.tta.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 
 @RestController
@@ -39,6 +41,12 @@ public class UserEndpoint {
     public UserDtoResponse addUser(@RequestBody @Valid AddUserDtoRequest request) throws ServerException {
 
         return userService.addUser(request);
+    }
+
+    @GetMapping(value = "/{id}")
+    @ApiOperation(value="Get user by id")
+    public UserDtoResponse getUserById(@PathVariable("id") @Min(1) int id ) throws ServerException {
+        return userService.getUser(id);
     }
 
 

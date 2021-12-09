@@ -9,12 +9,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
+
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserDetailsServiceImpl(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public UserDetailsImpl loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.getByLogin(username);
+        User user = userService.getUser(username);
         return UserDetailsImpl.fromUserToUserDetails(user);
     }
 }
