@@ -24,6 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 
 @Log
 @Getter
@@ -98,7 +103,26 @@ public class UserServiceImpl implements UserService {
         return commonMapper.convertToDto(user);
     }
 
-
+    @Override
+    public Set<UserDtoResponse> getUsers(String login, String lastname) {
+        Set<User> users = new HashSet<>();
+        if(!lastname.isEmpty()) {
+            users = userRepository.findByLastName(lastname);
+        }
+        if(!login.isEmpty()) {
+            User user = userRepository.getByLogin(login);
+            if(user != null) {
+                users.add(user);
+            }
+        }
+        if(login.isEmpty() && lastname.isEmpty()) {
+            List<User> allUsers = new ArrayList<>();
+            allUsers = userRepository.findAll();
+            users.addAll(allUsers);
+        }
+        log.info("Get users list " + users);
+        return commonMapper.usersToDto(users);
+    }
 
 
 }

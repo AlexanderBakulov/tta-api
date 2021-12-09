@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -47,6 +49,13 @@ public class UserEndpoint {
     @ApiOperation(value="Get user by id")
     public UserDtoResponse getUserById(@PathVariable("id") @Min(1) int id ) throws ServerException {
         return userService.getUser(id);
+    }
+
+    @GetMapping
+    @ApiOperation(value="Get users by login and/or last name")
+    public Set<UserDtoResponse> getUsers(@RequestParam(name = "login", required = false, defaultValue = "") String login,
+                                         @RequestParam(name = "lastname", required = false, defaultValue = "") String lastname) {
+        return userService.getUsers(login, lastname);
     }
 
 

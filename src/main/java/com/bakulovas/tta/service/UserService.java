@@ -8,6 +8,8 @@ import com.bakulovas.tta.dto.response.UserDtoResponse;
 import com.bakulovas.tta.entity.User;
 import com.bakulovas.tta.errors.ServerException;
 
+import java.util.Set;
+
 public interface UserService {
 
     LoginUserDtoResponse loginUser(LoginUserDtoRequest request) throws ServerException;
@@ -17,5 +19,7 @@ public interface UserService {
     UserDtoResponse addUser(AddUserDtoRequest request) throws ServerException;
 
     UserDtoResponse getUser(int id) throws ServerException;
+
+    Set<UserDtoResponse> getUsers(String login, String lastname);
 
 }

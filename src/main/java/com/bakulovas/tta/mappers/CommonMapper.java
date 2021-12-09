@@ -11,6 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Component
 public class CommonMapper {
@@ -43,5 +46,17 @@ public class CommonMapper {
         user.setOffice(office);
         user.setRole(role);
         return user;
+    }
+
+    public Set<UserDtoResponse> usersToDto(Set<User> users) {
+        Set<UserDtoResponse> response = new HashSet<>();
+        if(users.isEmpty()) {
+            return response;
+        }
+        for(User user : users) {
+            UserDtoResponse userDtoResponse = convertToDto(user);
+            response.add(userDtoResponse);
+        }
+        return response;
     }
 }
