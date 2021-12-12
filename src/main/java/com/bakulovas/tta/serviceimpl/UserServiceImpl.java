@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public LoginUserDtoResponse loginUser(LoginUserDtoRequest request) throws ServerException {
-        User user = getUser(request.getLogin());
+        User user = userRepository.getByLogin(request.getLogin());
         if(user == null) {
             throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
         }
@@ -73,11 +73,11 @@ public class UserServiceImpl implements UserService {
         return commonMapper.convertToDto(user, token);
     }
 
-    @Override
-    @Transactional
-    public User getUser(String login) {
-        return userRepository.getByLogin(login);
-    }
+//    @Override
+//    @Transactional
+//    public User getUser(String login) {
+//        return userRepository.getByLogin(login);
+//    }
 
     @Override
     @Transactional
@@ -116,8 +116,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         if(login.isEmpty() && lastname.isEmpty()) {
-            List<User> allUsers = new ArrayList<>();
-            allUsers = userRepository.findAll();
+            List<User> allUsers = userRepository.findAll();
             users.addAll(allUsers);
         }
         log.info("Get users list " + users);
