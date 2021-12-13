@@ -22,4 +22,5 @@ public interface UserService {
 
     Set<UserDtoResponse> getUsers(String login, String lastname);
 
+    User getUser(String username) throws ServerException;
 }

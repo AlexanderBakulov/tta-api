@@ -57,12 +57,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public LoginUserDtoResponse loginUser(LoginUserDtoRequest request) throws ServerException {
-        User user = userRepository.getByLogin(request.getLogin());
-        if(user == null) {
-            throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
-        }
+        User user = getUser(request.getLogin());
         commonService.validatePassword(user, request.getPassword());
         if(!user.isActive()) {
             throw new ServerException(ServerError.INACTIVE_USER);
@@ -86,7 +83,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDtoResponse getUser(int id) throws ServerException {
         User user = userRepository.getById(id);
         if(user == null) {
@@ -95,6 +92,8 @@ public class UserServiceImpl implements UserService {
         log.info("GET user with id " + user.getId());
         return commonMapper.convertToDto(user);
     }
+
+
 
     @Override
     public Set<UserDtoResponse> getUsers(String login, String lastname) {
@@ -114,6 +113,15 @@ public class UserServiceImpl implements UserService {
         }
         log.info("Get users list " + users);
         return commonMapper.usersToDto(users);
+    }
+
+    @Override
+    public User getUser(String login) throws ServerException {
+        User user = userRepository.getByLogin(login);
+        if(user == null) {
+            throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
+        }
+        return user;
     }
 
 
