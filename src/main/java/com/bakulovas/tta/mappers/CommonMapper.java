@@ -45,6 +45,8 @@ public class CommonMapper {
         User user = modelMapper.map(request, User.class);
         user.setOffice(office);
         user.setRole(role);
+        user.setActive(true);
+        user.setTempPassword(true);
         return user;
     }
 
