@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommonService {
 
-    public void validatePassword(User user, String password) throws ServerException {
+    public void validatePassword(User user, String password) {
         if(!user.getPassword().equals(password))
             throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
     }
 
-    public void isEmpty(Office office) throws ServerException {
+    public void isEmpty(Office office) {
         if(office == null) {
             throw new ServerException(ServerError.INCORRECT_OFFICE_NAME);
         }
     }
 
-    public void isEmpty(Role role) throws ServerException {
+    public void isEmpty(Role role) {
         if(role == null) {
             throw new ServerException(ServerError.EMPTY_ROLE);
         }
