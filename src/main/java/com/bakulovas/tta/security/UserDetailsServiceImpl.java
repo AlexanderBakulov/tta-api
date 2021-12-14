@@ -20,11 +20,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetailsImpl loadUserByUsername(String login) throws UsernameNotFoundException {
-        try {
+//        try {
             User user = userService.getUser(login);
             return UserDetailsImpl.fromUserToUserDetails(user);
-        } catch (ServerException e) {
-            throw new UsernameNotFoundException(e.getMessage());
-        }
+//        } catch (ServerException e) {
+//            throw new UsernameNotFoundException(e.getMessage());
+//        }
     }
 }

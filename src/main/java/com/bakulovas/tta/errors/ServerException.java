@@ -1,6 +1,6 @@
 package com.bakulovas.tta.errors;
 
-public class ServerException extends Exception {
+public class ServerException extends RuntimeException {
 
     private final ServerError serverError;
     private final String field;

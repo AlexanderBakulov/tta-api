@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public LoginUserDtoResponse loginUser(LoginUserDtoRequest request) throws ServerException {
+    public LoginUserDtoResponse loginUser(LoginUserDtoRequest request) {
         User user = getUser(request.getLogin());
         commonService.validatePassword(user, request.getPassword());
         if(!user.isActive()) {
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDtoResponse addUser(AddUserDtoRequest request) throws ServerException {
+    public UserDtoResponse addUser(AddUserDtoRequest request) {
         Office office = officeRepository.getByName(request.getOffice());
         commonService.isEmpty(office);
         Role role = roleRepository.getByName(request.getRole());
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDtoResponse getUser(int id) throws ServerException {
+    public UserDtoResponse getUser(int id) {
         User user = userRepository.getById(id);
         if(user == null) {
             throw new ServerException(ServerError.USER_NOT_FOUND);
