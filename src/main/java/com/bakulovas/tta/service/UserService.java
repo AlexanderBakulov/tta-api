@@ -12,15 +12,13 @@ import java.util.Set;
 
 public interface UserService {
 
-    LoginUserDtoResponse loginUser(LoginUserDtoRequest request) throws ServerException;
+    LoginUserDtoResponse loginUser(LoginUserDtoRequest request);
 
-//    User getUser(String username);
+    UserDtoResponse addUser(AddUserDtoRequest request);
 
-    UserDtoResponse addUser(AddUserDtoRequest request) throws ServerException;
-
-    UserDtoResponse getUser(int id) throws ServerException;
+    UserDtoResponse getUser(int id);
 
     Set<UserDtoResponse> getUsers(String login, String lastname);
 
-    User getUser(String username) throws ServerException;
+    User getUser(String username);
 }
