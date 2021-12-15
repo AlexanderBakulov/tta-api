@@ -1,7 +1,6 @@
 package com.bakulovas.tta.security;
 
 import com.bakulovas.tta.entity.User;
-import com.bakulovas.tta.errors.ServerException;
 import com.bakulovas.tta.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,11 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetailsImpl loadUserByUsername(String login) throws UsernameNotFoundException {
-//        try {
             User user = userService.getUser(login);
             return UserDetailsImpl.fromUserToUserDetails(user);
-//        } catch (ServerException e) {
-//            throw new UsernameNotFoundException(e.getMessage());
-//        }
     }
 }

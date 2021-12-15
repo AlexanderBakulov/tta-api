@@ -33,8 +33,6 @@ public class JwtProvider {
     public String generateToken(User user) {
         Claims claims = Jwts.claims().setSubject(user.getLogin());
         claims.put("userId", user.getId());
-        claims.put("isActive", user.isActive());
-        claims.put("isTempPassword", user.isTempPassword());
         claims.put("office", user.getOffice().getName());
         claims.put("role", user.getRole().getName());
 
@@ -57,8 +55,6 @@ public class JwtProvider {
             User user = new User();
             user.setLogin(body.getSubject());
             user.setId((Integer) body.get("userId"));
-            user.setActive((boolean) body.get("isActive"));
-            user.setTempPassword((boolean) body.get("isTempPassword"));
             user.setOffice(office);
             user.setRole(role);
             return user;

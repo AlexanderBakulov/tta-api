@@ -18,10 +18,21 @@ public class JwtProviderTest {
 
     @Test
     public void testGetUserFromToken() {
-        String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwiaXNBY3RpdmUiOnRydWUsImlzVGVtcFBhc3N3b3JkIjp0cnVlLCJvZmZpY2VJZCI6MSwicm9sZSI6IkFETUlOIn0.rrpZRhVTVrnpPKijqdQQcpupkzb9kVdAeXyq0Gx1zW9s1okEVx9A1DPGhO7AShgKxKvyE4IEzZA_N8JsYulhvA";
+        String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwib2ZmaWNlIjoiTVNLIiwicm9sZSI6IkFETUlOIn0._8cszY8JlFRiVeZ0DId5m4FXi5WkiHuuZXbJAYAvSjkWMDKVVr9-kGUXcm0z_2ZTX84NmEEKlt_S0_30U51xLg";
         User user = jwtProvider.getUserFromToken(token);
         System.out.println(user);
         assertEquals("admin", user.getLogin());
+        assertEquals("ADMIN", user.getRole().getName());
+
+    }
+
+    @Test
+    public void testGetUserFromToken_manager() {
+        String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyMyIsInVzZXJJZCI6NSwib2ZmaWNlIjoiTVNLIiwicm9sZSI6Ik1BTkFHRVIifQ.MdpZR_UNA217Xy5B6pzw8ocU-0A6hO09Y-9kVREi56jfbJuimTpUwq0ddTXnvr3im2IuRtNGSQ_iOaYX4iqYCA";
+        User user = jwtProvider.getUserFromToken(token);
+        System.out.println(user);
+        assertEquals("manager3", user.getLogin());
+        assertEquals("MANAGER", user.getRole().getName());
 
     }
 }

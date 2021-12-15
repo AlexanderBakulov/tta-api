@@ -16,6 +16,9 @@ VALUES ('support3', '', 'support3@tta.com', 'Petr', 'Sidorov', 1, 2);
 INSERT INTO `user` (login, password, email, first_name, last_name, office_id, role_id)
 VALUES ('support4', '', 'support4@tta.com', 'Boom', 'Box', 2, 2);
 
+INSERT INTO `user` (login, password, email, first_name, last_name, office_id, role_id)
+VALUES ('manager3', '', 'boss2@tta.com', 'Angry', 'Boss', 1, 4);
+
 
 
 
