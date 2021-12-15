@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserOptionsRepository extends JpaRepository<UserOptions, Integer> {
 
-    UserOptions getByUser(User user);
+    UserOptions findByUser(User user);
 }

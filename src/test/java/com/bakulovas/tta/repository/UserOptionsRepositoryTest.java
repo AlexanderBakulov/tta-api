@@ -35,7 +35,7 @@ public class UserOptionsRepositoryTest {
         userOptions.setTicketCounter(10);
         userOptions.setUser(user);
         userOptionsRepository.save(userOptions);
-        UserOptions optionsFromDB = userOptionsRepository.getByUser(user);
+        UserOptions optionsFromDB = userOptionsRepository.findByUser(user);
         assertEquals(user, optionsFromDB.getUser());
         System.out.println("++++++++OPTION ID " + optionsFromDB.getId());
 

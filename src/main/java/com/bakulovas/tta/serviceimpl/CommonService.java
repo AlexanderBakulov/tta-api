@@ -7,6 +7,7 @@ import com.bakulovas.tta.errors.ServerError;
 import com.bakulovas.tta.errors.ServerException;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class CommonService {
 

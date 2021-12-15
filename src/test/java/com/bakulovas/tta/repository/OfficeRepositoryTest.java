@@ -11,6 +11,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -38,24 +40,23 @@ public class OfficeRepositoryTest {
         User user = new User("login", "password", "email",
                 "firstname", "lastname", office, role);
         userRepository.save(user);
-        User userFromDb = userRepository.getByLogin(user.getLogin());
+        User userFromDb = userRepository.findByLogin(user.getLogin()).get();
         assertEquals(user.getId(), userFromDb.getId());
         userRepository.delete(user);
-        userFromDb = userRepository.getByLogin(user.getLogin());
-        assertNull(userFromDb);
+        assertEquals(Optional.empty(), userRepository.findByLogin(user.getLogin()));
     }
 
     @Test
     public void testGetOfficeByName() {
         String name = "NSK";
-        Office office = officeRepository.getByName(name);
+        Office office = officeRepository.findByName(name).get();
         assertEquals(name, office.getName());
     }
 
     @Test
     public void testGetOfficeById() {
         int id = 2;
-        Office office = officeRepository.getById(id);
+        Office office = officeRepository.findById(id).get();
         assertEquals(id, office.getId());
     }
 

@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
 
 
 @Component
-public class CommonMapper {
+public class UserMapper {
 
     private final ModelMapper modelMapper;
 
     @Autowired
-    public CommonMapper(ModelMapper modelMapper) {
+    public UserMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 

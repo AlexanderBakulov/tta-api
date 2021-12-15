@@ -10,6 +10,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -27,40 +29,40 @@ public class UserRepositoryTest {
 
     @Test
     public void testUserRepository() {
-        Role role = roleRepository.getById(3);
-        Office office = officeRepository.getById(1);
+        Role role = roleRepository.findById(3).get();
+        Office office = officeRepository.findById(1).get();
         User user = new User("Vasya", "11aA", "a@a.a", "vasya", "Vasya", office, role);
         userRepository.save(user);
-        User userFromDB = userRepository.getByLogin("Vasya");
+        User userFromDB = userRepository.findByLogin("Vasya").get();
         assertEquals(user.getLogin(), userFromDB.getLogin());
         userRepository.delete(user);
     }
 
     @Test
     public void testUserRepository_incorrectUser() {
-        assertNull(userRepository.getByLogin("Petya"));
+        assertEquals(Optional.empty(), userRepository.findByLogin("Petya"));
     }
 
 
     @Test
     public void testGetByLogin() {
         String login = "manager";
-        User user = userRepository.getByLogin(login);
+        User user = userRepository.findByLogin(login).get();
         assertEquals(login, user.getLogin());
     }
 
     @Test
     public void testGetByLogin_wrongLogin() {
         String login = "Wrong";
-        User user = userRepository.getByLogin(login);
-        assertNull(user);
+        Optional<User> user = userRepository.findByLogin(login);
+        assertEquals(Optional.empty(), user);
 
     }
 
     @Test
     public void testGetById() {
         int id = 3;
-        User user = userRepository.getById(id);
+        User user = userRepository.findById(id).get();
         assertEquals(id, user.getId());
         System.out.println(user.getFirstName());
     }

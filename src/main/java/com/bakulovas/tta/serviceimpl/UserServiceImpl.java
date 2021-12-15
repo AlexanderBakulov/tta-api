@@ -10,7 +10,7 @@ import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;
 import com.bakulovas.tta.errors.ServerError;
 import com.bakulovas.tta.errors.ServerException;
-import com.bakulovas.tta.mappers.CommonMapper;
+import com.bakulovas.tta.mappers.UserMapper;
 import com.bakulovas.tta.repository.OfficeRepository;
 import com.bakulovas.tta.repository.RoleRepository;
 import com.bakulovas.tta.repository.UserOptionsRepository;
@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -39,19 +40,19 @@ public class UserServiceImpl implements UserService {
     private final OfficeRepository officeRepository;
     private final RoleRepository roleRepository;
     private final UserOptionsRepository userOptionsRepository;
-    private final CommonMapper commonMapper;
+    private final UserMapper userMapper;
     private final CommonService commonService;
     private final JwtProvider jwtProvider;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, OfficeRepository officeRepository,
                            RoleRepository roleRepository, UserOptionsRepository userOptionsRepository,
-                           CommonMapper commonMapper, CommonService commonService, JwtProvider jwtProvider) {
+                           UserMapper userMapper, CommonService commonService, JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.officeRepository = officeRepository;
         this.roleRepository = roleRepository;
         this.userOptionsRepository = userOptionsRepository;
-        this.commonMapper = commonMapper;
+        this.userMapper = userMapper;
         this.commonService = commonService;
         this.jwtProvider = jwtProvider;
     }
@@ -66,31 +67,38 @@ public class UserServiceImpl implements UserService {
         }
         String token = jwtProvider.generateToken(user);
         log.info("LOGIN user with id " + user.getId());
-        return commonMapper.convertToDto(user, token);
+        return userMapper.convertToDto(user, token);
     }
 
     @Override
     @Transactional
     public UserDtoResponse addUser(AddUserDtoRequest request) {
-        Office office = officeRepository.getByName(request.getOffice());
-        commonService.isEmpty(office);
-        Role role = roleRepository.getByName(request.getRole());
-        commonService.isEmpty(role);
-        User user = commonMapper.convertToUser(request, office, role);
+        Optional<Office> o = officeRepository.findByName(request.getOffice());
+        if(o.isEmpty()) {
+            throw new ServerException(ServerError.INCORRECT_OFFICE_NAME);
+        }
+        Office office = o.get();
+        Optional<Role> r = roleRepository.findByName(request.getRole());
+        if(r.isEmpty()) {
+            throw new ServerException(ServerError.INCORRECT_ROLE);
+        }
+        Role role = r.get();
+        User user = userMapper.convertToUser(request, office, role);
         userRepository.save(user);
         log.info("ADD user with id " + user.getId());
-        return commonMapper.convertToDto(user);
+        return userMapper.convertToDto(user);
     }
 
     @Override
     @Transactional(readOnly = true)
     public UserDtoResponse getUser(int id) {
-        User user = userRepository.getById(id);
-        if(user == null) {
+        Optional<User> u = userRepository.findById(id);
+        if(u.isEmpty()) {
             throw new ServerException(ServerError.USER_NOT_FOUND);
         }
+        User user = u.get();
         log.info("GET user with id " + user.getId());
-        return commonMapper.convertToDto(user);
+        return userMapper.convertToDto(user);
     }
 
 
@@ -102,9 +110,9 @@ public class UserServiceImpl implements UserService {
             users = userRepository.findByLastName(lastname);
         }
         if(!login.isEmpty()) {
-            User user = userRepository.getByLogin(login);
-            if(user != null) {
-                users.add(user);
+            Optional<User> u = userRepository.findByLogin(login);
+            if(u.isPresent()) {
+                users.add(u.get());
             }
         }
         if(login.isEmpty() && lastname.isEmpty()) {
@@ -112,16 +120,16 @@ public class UserServiceImpl implements UserService {
             users.addAll(allUsers);
         }
         log.info("Get users list " + users);
-        return commonMapper.usersToDto(users);
+        return userMapper.usersToDto(users);
     }
 
     @Override
     public User getUser(String login) throws ServerException {
-        User user = userRepository.getByLogin(login);
-        if(user == null) {
+        Optional<User> u = userRepository.findByLogin(login);
+        if(u.isEmpty()) {
             throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
         }
-        return user;
+        return u.get();
     }
 
 
