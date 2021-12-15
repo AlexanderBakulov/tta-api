@@ -106,11 +106,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<UserDtoResponse> getUsers(String login, String lastname) {
         Set<User> users = new HashSet<>();
-        if(!lastname.isEmpty()) {
+        Optional<User> u;
+        if(!login.isEmpty() && !lastname.isEmpty()) {
+            u = userRepository.findByLoginAndLastName(login, lastname);
+            if(u.isPresent()) {
+                users.add(u.get());
+            }
+        }
+        if(login.isEmpty() && !lastname.isEmpty()) {
             users = userRepository.findByLastName(lastname);
         }
-        if(!login.isEmpty()) {
-            Optional<User> u = userRepository.findByLogin(login);
+        if(!login.isEmpty() && lastname.isEmpty()) {
+            u = userRepository.findByLogin(login);
             if(u.isPresent()) {
                 users.add(u.get());
             }
