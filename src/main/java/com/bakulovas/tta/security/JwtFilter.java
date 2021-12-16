@@ -34,11 +34,16 @@ public class JwtFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         log.info("do filter...");
+
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
+        log.info("TOKEN " + token);
         if (token != null) {
             User user = jwtProvider.getUserFromToken(token);
+            log.info("USER " + user.getLogin() + " " + user.getRole().getName());
             UserDetailsImpl userDetails = UserDetailsImpl.fromUserToUserDetails(user);
+            log.info("USER_DETAILS " + userDetails.getUsername() + " " + userDetails.getAuthorities().toString());
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            log.info(auth.toString());
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
         filterChain.doFilter(servletRequest, servletResponse);

@@ -57,9 +57,11 @@ public class JwtProvider {
             user.setId((Integer) body.get("userId"));
             user.setOffice(office);
             user.setRole(role);
+            log.info("USER_FROM_TOKEN " + user.getLogin() + user.getRole().getName() + user.getOffice().getName());
             return user;
 
         } catch (JwtException | ClassCastException | NullPointerException e) {
+            log.info("USER_FROM_TOKEN IS NULL");
             return null;
         }
     }

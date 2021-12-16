@@ -60,7 +60,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public LoginUserDtoResponse loginUser(LoginUserDtoRequest request) {
+        log.info("====UserService login User=====");
         User user = getUser(request.getLogin());
+        log.info("USER " + user.getLogin());
         commonService.validatePassword(user, request.getPassword());
         if(!user.isActive()) {
             throw new ServerException(ServerError.INACTIVE_USER);
