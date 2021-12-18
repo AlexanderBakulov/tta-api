@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-
 public class MinLengthValidator implements ConstraintValidator<MinLength, String> {
 
     private final ServerConfig serverConfig;

@@ -86,6 +86,7 @@ public class UserServiceImpl implements UserService {
         }
         Role role = r.get();
         User user = userMapper.convertToUser(request, office, role);
+        user.setPassword(commonService.encodePassword(request.getPassword()));
         userRepository.save(user);
         log.info("ADD user with id " + user.getId());
         return userMapper.convertToDto(user);
