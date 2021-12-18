@@ -1,4 +1,4 @@
-package com.bakulovas.tta.endpoint;
+package com.bakulovas.tta.api;
 
 import com.bakulovas.tta.dto.request.LoginUserDtoRequest;
 import com.bakulovas.tta.dto.response.LoginUserDtoResponse;
@@ -24,7 +24,7 @@ public class LoginEndpoint {
 
     @PostMapping("api/login")
     @ApiOperation(value="Login user")
-    public LoginUserDtoResponse login(@RequestBody @Valid LoginUserDtoRequest request) throws ServerException {
+    public LoginUserDtoResponse login(@Valid @RequestBody LoginUserDtoRequest request) {
 
         return userService.loginUser(request);
     }

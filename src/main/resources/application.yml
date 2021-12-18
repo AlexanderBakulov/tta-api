@@ -47,7 +47,7 @@ server:
 
 #app properties
 tta:
-  min_password_length: 3
+  min_password_length: 6
   low_priority_timer: 16
   medium_priority_timer: 8
   critical_priority_timer: 2
@@ -56,6 +56,7 @@ tta:
   lunch_start_hour: 12
   lunch_end_hour: 13
   confirm_timer: 24
+  admin_password: "password"
   
 #Actuator
 management:

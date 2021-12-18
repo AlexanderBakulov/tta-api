@@ -1,4 +1,4 @@
-package com.bakulovas.tta.endpoint;
+package com.bakulovas.tta.api;
 
 
 import com.bakulovas.tta.dto.request.AddUserDtoRequest;
@@ -29,14 +29,14 @@ public class UserEndpoint {
     }
 
     @PostMapping("users")
-    public UserDtoResponse addUser(@RequestBody @Valid AddUserDtoRequest request) throws ServerException {
+    public UserDtoResponse addUser(@Valid @RequestBody AddUserDtoRequest request) {
 
         return userService.addUser(request);
     }
 
     @GetMapping(value = "users/{id}")
     @ApiOperation(value="Get user by id")
-    public UserDtoResponse getUserById(@PathVariable("id") @Min(1) int id ) throws ServerException {
+    public UserDtoResponse getUserById(@PathVariable("id") @Min(1) int id ) {
         return userService.getUser(id);
     }
 

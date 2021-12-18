@@ -17,7 +17,7 @@ import static com.bakulovas.tta.config.StaticData.*;
 public class AddUserDtoRequest {
 
     @NotBlank
-    @Size(min=1, max=32)
+    @Size(min=2, max=32)
     @Pattern(regexp = NAME_VALIDATION_REGEXP, message = INVALID_LOGIN)
     private String login;
     @NotBlank

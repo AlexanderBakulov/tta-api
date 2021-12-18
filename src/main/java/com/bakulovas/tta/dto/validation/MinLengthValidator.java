@@ -4,6 +4,7 @@ import com.bakulovas.tta.config.ServerConfig;
 import com.bakulovas.tta.dto.validation.annotations.MinLength;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
