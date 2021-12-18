@@ -16,6 +16,7 @@ import com.bakulovas.tta.repository.RoleRepository;
 import com.bakulovas.tta.repository.UserOptionsRepository;
 import com.bakulovas.tta.repository.UserRepository;
 import com.bakulovas.tta.security.JwtProvider;
+import com.bakulovas.tta.security.PasswordService;
 import com.bakulovas.tta.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,13 +42,13 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final UserOptionsRepository userOptionsRepository;
     private final UserMapper userMapper;
-    private final CommonService commonService;
+    private final PasswordService commonService;
     private final JwtProvider jwtProvider;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, OfficeRepository officeRepository,
                            RoleRepository roleRepository, UserOptionsRepository userOptionsRepository,
-                           UserMapper userMapper, CommonService commonService, JwtProvider jwtProvider) {
+                           UserMapper userMapper, PasswordService commonService, JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.officeRepository = officeRepository;
         this.roleRepository = roleRepository;

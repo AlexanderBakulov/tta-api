@@ -1,4 +1,4 @@
-package com.bakulovas.tta.serviceimpl;
+package com.bakulovas.tta.security;
 
 import com.bakulovas.tta.entity.User;
 import com.bakulovas.tta.errors.ServerError;
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class CommonService {
+public class PasswordService {
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CommonService(PasswordEncoder passwordEncoder) {
+    public PasswordService(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 

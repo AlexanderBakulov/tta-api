@@ -19,6 +19,7 @@ public class ServerConfig {
     private final int lunchStartHour;
     private final int lunchEndHour;
     private final int confirmTimer;
+    private final String adminPassword;
 
     public ServerConfig(@Value("${tta.min_password_length}") int minPasswordLength,
                         @Value("${tta.low_priority_timer}") int lowPriorityTimer,
@@ -28,7 +29,8 @@ public class ServerConfig {
                         @Value("${tta.work_end_hour}") int workEndHour,
                         @Value("${tta.lunch_start_hour}") int lunchStartHour,
                         @Value("${tta.lunch_end_hour}") int lunchEndHour,
-                        @Value("${tta.confirm_timer}") int confirmTimer) {
+                        @Value("${tta.confirm_timer}") int confirmTimer,
+                        @Value("${tta.admin_password}")String adminPassword) {
         this.minPasswordLength = minPasswordLength;
         this.lowPriorityTimer = lowPriorityTimer;
         this.mediumPriorityTimer = mediumPriorityTimer;
@@ -38,6 +40,7 @@ public class ServerConfig {
         this.lunchStartHour = lunchStartHour;
         this.lunchEndHour = lunchEndHour;
         this.confirmTimer = confirmTimer;
+        this.adminPassword = adminPassword;
     }
 
 
