@@ -42,19 +42,19 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final UserOptionsRepository userOptionsRepository;
     private final UserMapper userMapper;
-    private final PasswordService commonService;
+    private final PasswordService passwordService;
     private final JwtProvider jwtProvider;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, OfficeRepository officeRepository,
                            RoleRepository roleRepository, UserOptionsRepository userOptionsRepository,
-                           UserMapper userMapper, PasswordService commonService, JwtProvider jwtProvider) {
+                           UserMapper userMapper, PasswordService passwordService, JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.officeRepository = officeRepository;
         this.roleRepository = roleRepository;
         this.userOptionsRepository = userOptionsRepository;
         this.userMapper = userMapper;
-        this.commonService = commonService;
+        this.passwordService = passwordService;
         this.jwtProvider = jwtProvider;
     }
 
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
         log.info("====UserService login User=====");
         User user = getUser(request.getLogin());
         log.info("USER " + user.getLogin());
-        commonService.validatePassword(user, request.getPassword());
+        passwordService.validatePassword(user, request.getPassword());
         if(!user.isActive()) {
             throw new ServerException(ServerError.INACTIVE_USER);
         }
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
         }
         Role role = r.get();
         User user = userMapper.convertToUser(request, office, role);
-        user.setPassword(commonService.encodePassword(request.getPassword()));
+        user.setPassword(passwordService.encodePassword(request.getPassword()));
         userRepository.save(user);
         log.info("ADD user with id " + user.getId());
         return userMapper.convertToDto(user);

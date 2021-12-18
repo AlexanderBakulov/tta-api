@@ -19,7 +19,7 @@ spring:
 
 logging:
   file:
-    max-history: 1
+    max-history: 5
     name: tta.log
   level:
     org:
@@ -66,4 +66,4 @@ management:
         include: '*'
 
 jwt:
-  secret: supersecret
+  secret: 'Password1'
