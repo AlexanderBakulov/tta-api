@@ -54,7 +54,7 @@ FOREIGN KEY (role_id) REFERENCES role (id)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `user` (login, password, email, first_name, last_name, office_id, role_id)
-VALUES ('admin', 'pass', 'admin@tta.com', 'admin', 'admin', 1, 1);
+VALUES ('admin', '$2a$10$Q/flBdnJ.FA4W1CPJ6I9NOkJxsLtU8qEMfG32klfeD4wf0pWxaoge', 'admin@tta.com', 'admin', 'admin', 1, 1);
 
 DROP TABLE IF EXISTS `options`;
 

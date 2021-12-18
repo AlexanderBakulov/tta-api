@@ -30,7 +30,7 @@ class UserServiceImplTest {
 
     @Test
     void testLoginUser() throws ServerException {
-        LoginUserDtoRequest request = new LoginUserDtoRequest("admin", "pass");
+        LoginUserDtoRequest request = new LoginUserDtoRequest("admin", "Password1");
         LoginUserDtoResponse response = userService.loginUser(request);
         assertEquals(request.getLogin(), response.getLogin());
 

@@ -56,7 +56,6 @@ tta:
   lunch_start_hour: 12
   lunch_end_hour: 13
   confirm_timer: 24
-  admin_password: "password"
   
 #Actuator
 management:

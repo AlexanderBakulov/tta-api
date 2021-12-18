@@ -18,12 +18,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtFilter jwtFilter;
-    private final ServerConfig serverConfig;
 
     @Autowired
-    public SecurityConfig(JwtFilter jwtFilter, ServerConfig serverConfig) {
+    public SecurityConfig(JwtFilter jwtFilter) {
         this.jwtFilter = jwtFilter;
-        this.serverConfig = serverConfig;
     }
 
     @Override
@@ -44,8 +42,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode(serverConfig.getAdminPassword())).roles("ADMIN");
-    }
+
 }

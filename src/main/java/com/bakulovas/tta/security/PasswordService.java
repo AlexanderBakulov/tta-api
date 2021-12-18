@@ -1,6 +1,5 @@
 package com.bakulovas.tta.security;
 
-import com.bakulovas.tta.entity.User;
 import com.bakulovas.tta.errors.ServerError;
 import com.bakulovas.tta.errors.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,8 @@ public class PasswordService {
     }
 
 
-    public void validatePassword(User user, String password) {
-        if(!passwordEncoder.matches(password, user.getPassword())) {
+    public void validatePassword(String password, String passwordFromRequest) {
+        if(!passwordEncoder.matches(passwordFromRequest, password)) {
             throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
         }
     }

@@ -1,6 +1,7 @@
 package com.bakulovas.tta.serviceimpl;
 
 
+import com.bakulovas.tta.config.ServerConfig;
 import com.bakulovas.tta.dto.request.AddUserDtoRequest;
 import com.bakulovas.tta.dto.request.LoginUserDtoRequest;
 import com.bakulovas.tta.dto.response.LoginUserDtoResponse;
@@ -44,11 +45,12 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordService passwordService;
     private final JwtProvider jwtProvider;
+    private final ServerConfig serverConfig;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, OfficeRepository officeRepository,
                            RoleRepository roleRepository, UserOptionsRepository userOptionsRepository,
-                           UserMapper userMapper, PasswordService passwordService, JwtProvider jwtProvider) {
+                           UserMapper userMapper, PasswordService passwordService, JwtProvider jwtProvider, ServerConfig serverConfig) {
         this.userRepository = userRepository;
         this.officeRepository = officeRepository;
         this.roleRepository = roleRepository;
@@ -56,6 +58,7 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
         this.passwordService = passwordService;
         this.jwtProvider = jwtProvider;
+        this.serverConfig = serverConfig;
     }
 
     @Override
@@ -64,7 +67,7 @@ public class UserServiceImpl implements UserService {
         log.info("====UserService login User=====");
         User user = getUser(request.getLogin());
         log.info("USER " + user.getLogin());
-        passwordService.validatePassword(user, request.getPassword());
+        passwordService.validatePassword(user.getPassword(), request.getPassword());
         if(!user.isActive()) {
             throw new ServerException(ServerError.INACTIVE_USER);
         }
