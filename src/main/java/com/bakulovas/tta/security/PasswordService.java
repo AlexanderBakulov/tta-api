@@ -18,8 +18,11 @@ public class PasswordService {
     }
 
 
-    public void validatePassword(String password, String passwordFromRequest) {
-        if(!passwordEncoder.matches(passwordFromRequest, password)) {
+    public boolean validatePassword(String password, String passwordFromRequest) {
+        boolean valid = passwordEncoder.matches(passwordFromRequest, password);
+        if(valid) {
+            return valid;
+        } else {
             throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
         }
     }

@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
     private final JwtProvider jwtProvider;
     private final ServerConfig serverConfig;
 
+
     @Autowired
     public UserServiceImpl(UserRepository userRepository, OfficeRepository officeRepository,
                            RoleRepository roleRepository, UserOptionsRepository userOptionsRepository,
@@ -64,15 +65,23 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public LoginUserDtoResponse loginUser(LoginUserDtoRequest request) {
-        log.info("====UserService login User=====");
-        User user = getUser(request.getLogin());
-        log.info("USER " + user.getLogin());
-        passwordService.validatePassword(user.getPassword(), request.getPassword());
-        if(!user.isActive()) {
-            throw new ServerException(ServerError.INACTIVE_USER);
+        User user = new User();
+        log.info("ADMIN LOGIN IS " + serverConfig.getAdminLogin());
+        log.info("ADMIN PASSWORD IS " + serverConfig.getAdminPassword());
+        if(request.getLogin().equals(serverConfig.getAdminLogin()) && passwordService.validatePassword(serverConfig.getAdminPassword(), request.getPassword())) {
+            user.setId(0);
+            user.setLogin(request.getLogin());
+            user.setOffice(officeRepository.getByName("MSK"));
+            user.setRole(roleRepository.getByName("ADMIN"));
+        } else {
+            user = getUser(request.getLogin());
+            passwordService.validatePassword(user.getPassword(), request.getPassword());
+            if (!user.isActive()) {
+                throw new ServerException(ServerError.INACTIVE_USER);
+            }
         }
-        String token = jwtProvider.generateToken(user);
-        log.info("LOGIN user with id " + user.getId());
+            String token = jwtProvider.generateToken(user);
+            log.info("LOGIN user with id " + user.getId());
         return userMapper.convertToDto(user, token);
     }
 
