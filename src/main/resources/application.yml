@@ -11,8 +11,12 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
+        generate-statistics: true
         id:
           new_generator_mappings: false
+        session:
+          events:
+            log: LOG_QUERIES_SLOWER_THAN_MS=3
     hibernate:
       ddl-auto: none
     show-sql: true
@@ -26,6 +30,8 @@ logging:
       hibernate:
         nodeValue: INFO
         SQL: DEBUG
+        stat: DEBUG
+        cashe: DEBUG
         type:
           descriptor:
             sql:
@@ -58,7 +64,7 @@ tta:
   confirm_timer: 24
   admin_login: 'Admin'
   admin_password: '$2a$10$Q/flBdnJ.FA4W1CPJ6I9NOkJxsLtU8qEMfG32klfeD4wf0pWxaoge'
-  
+
 #Actuator
 management:
   endpoints:
