@@ -21,7 +21,7 @@ public class UserDtoResponse {
     private boolean isActive;
     private String office;
     private String role;
-    private int creatorId;
+    private String creator;
     private String created;
 
 }

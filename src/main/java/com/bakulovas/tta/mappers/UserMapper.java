@@ -37,9 +37,6 @@ public class UserMapper {
         UserDtoResponse response = modelMapper.map(user, UserDtoResponse.class);
         response.setOffice(user.getOffice().getName());
         response.setRole(user.getRole().getName());
-        if (user.getCreator() != null) {
-            response.setCreatorId(user.getCreator().getId());
-        }
         response.setCreated(user.getCreated().toString());
         return response;
     }

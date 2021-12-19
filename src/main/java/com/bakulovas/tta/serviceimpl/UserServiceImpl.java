@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -91,6 +92,9 @@ public class UserServiceImpl implements UserService {
         Role role = findRoleByName(request.getRole());
         User user = userMapper.convertToUser(request, office, role);
         user.setPassword(passwordService.encodePassword(request.getPassword()));
+        user.setCreated(LocalDateTime.now());
+        //todo add real creator
+        user.setCreator("Admin");
         userRepository.save(user);
         log.info("ADD user with id " + user.getId());
         return userMapper.convertToDto(user);

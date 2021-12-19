@@ -42,9 +42,8 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
-    @ManyToOne
-    @JoinColumn(name = "creator_id")
-    private User creator;
+    @Column(name="creator")
+    private String creator;
     @Column(name="created")
     private LocalDateTime created;
 
