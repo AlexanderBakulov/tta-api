@@ -48,7 +48,7 @@ public class UserEndpoint {
         return userService.getUsers(login, lastname);
     }
 
-    @PatchMapping(value = "/{id}")
+    @PatchMapping(value = "users/{id}")
     @ApiOperation(value="Update user")
     public UserDtoResponse updateUser(@PathVariable("id") @Min(1) int id ,
                                       @Valid @RequestBody UpdateUserDtoRequest request) {

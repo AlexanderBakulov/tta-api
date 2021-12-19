@@ -19,11 +19,14 @@ import com.bakulovas.tta.repository.UserOptionsRepository;
 import com.bakulovas.tta.repository.UserRepository;
 import com.bakulovas.tta.security.JwtProvider;
 import com.bakulovas.tta.security.PasswordService;
+import com.bakulovas.tta.security.UserDetailsImpl;
 import com.bakulovas.tta.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,7 +56,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public UserServiceImpl(UserRepository userRepository, OfficeRepository officeRepository,
                            RoleRepository roleRepository, UserOptionsRepository userOptionsRepository,
-                           UserMapper userMapper, PasswordService passwordService, JwtProvider jwtProvider, ServerConfig serverConfig) {
+                           UserMapper userMapper, PasswordService passwordService, JwtProvider jwtProvider,
+                           ServerConfig serverConfig) {
         this.userRepository = userRepository;
         this.officeRepository = officeRepository;
         this.roleRepository = roleRepository;
@@ -94,7 +98,9 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordService.encodePassword(request.getPassword()));
         user.setCreated(LocalDateTime.now());
         //todo add real creator
-        user.setCreator("Admin");
+        String username = getUsernameFromSecurityContext();
+        log.info("USERNAME FROM SECURITY CONTEXT " + username);
+        user.setCreator(username);
         userRepository.save(user);
         log.info("ADD user with id " + user.getId());
         return userMapper.convertToDto(user);
@@ -195,6 +201,18 @@ public class UserServiceImpl implements UserService {
             throw new ServerException(ServerError.INCORRECT_OFFICE_NAME);
         }
         return  office.get();
+    }
+
+    public String getUsernameFromSecurityContext() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth == null) {
+            throw new ServerException(ServerError.USER_NOT_AUTHENTICATED);
+        }
+        Object obj = auth.getPrincipal();
+        if(obj == null) {
+            throw new ServerException(ServerError.USER_NOT_AUTHENTICATED);
+        }
+        return ((UserDetailsImpl) obj).getUsername();
     }
 
 }
