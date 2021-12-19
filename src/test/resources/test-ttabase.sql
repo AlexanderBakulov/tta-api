@@ -44,13 +44,16 @@ last_name VARCHAR(32) NOT NULL,
 active BOOLEAN NOT NULL DEFAULT TRUE,
 office_id INT NOT NULL,
 role_id INT NOT NULL,
+creator_id INT DEFAULT NULL,
+created DATETIME DEFAULT NULL,
 PRIMARY KEY (id),
 UNIQUE KEY login (login),
 UNIQUE KEY email (email),
 KEY first_name (first_name),
 KEY last_name (last_name),
 FOREIGN KEY (office_id) REFERENCES office (id),
-FOREIGN KEY (role_id) REFERENCES role (id)
+FOREIGN KEY (role_id) REFERENCES role (id),
+FOREIGN KEY (creator_id) REFERENCES user (id)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `options`;

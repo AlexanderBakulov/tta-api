@@ -52,7 +52,7 @@ KEY first_name (first_name),
 KEY last_name (last_name),
 FOREIGN KEY (office_id) REFERENCES office (id),
 FOREIGN KEY (role_id) REFERENCES role (id),
-FOREIGN KEY (creator_id) REFERENCES user (id),
+FOREIGN KEY (creator_id) REFERENCES user (id)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `options`;
