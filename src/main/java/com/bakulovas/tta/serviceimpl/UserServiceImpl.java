@@ -87,16 +87,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDtoResponse addUser(AddUserDtoRequest request) {
-        Optional<Office> o = officeRepository.findByName(request.getOffice());
-        if(o.isEmpty()) {
-            throw new ServerException(ServerError.INCORRECT_OFFICE_NAME);
-        }
-        Office office = o.get();
-        Optional<Role> r = roleRepository.findByName(request.getRole());
-        if(r.isEmpty()) {
-            throw new ServerException(ServerError.INCORRECT_ROLE);
-        }
-        Role role = r.get();
+        Office office = findOfficeByName(request.getOffice());
+        Role role = findRoleByName(request.getRole());
         User user = userMapper.convertToUser(request, office, role);
         user.setPassword(passwordService.encodePassword(request.getPassword()));
         userRepository.save(user);
@@ -152,12 +144,6 @@ public class UserServiceImpl implements UserService {
         return u.get();
     }
 
-//    private String email;
-//    private String firstName;
-//    private String lastName;
-//    private String office;
-//    private String role;
-
     @Override
     @Transactional
     public UserDtoResponse updateUser(int id, UpdateUserDtoRequest request) {
@@ -172,18 +158,10 @@ public class UserServiceImpl implements UserService {
             user.setLastName(request.getLastName());
         }
         if(request.getOffice() != null) {
-            Optional<Office> office = officeRepository.findByName(request.getOffice());
-            if(office.isEmpty()) {
-                throw new ServerException(ServerError.INCORRECT_OFFICE_NAME);
-            }
-            user.setOffice(office.get());
+            user.setOffice(findOfficeByName(request.getOffice()));
         }
         if(request.getRole() != null) {
-            Optional<Role> role = roleRepository.findByName(request.getRole());
-            if(role.isEmpty()) {
-                throw new ServerException(ServerError.INCORRECT_ROLE);
-            }
-            user.setRole(role.get());
+            user.setRole(findRoleByName(request.getRole()));
         }
         userRepository.save(user);
         log.info("UPDATE user with id " + user.getId());
@@ -197,6 +175,22 @@ public class UserServiceImpl implements UserService {
             throw new ServerException(ServerError.USER_NOT_FOUND);
         }
         return user.get();
+    }
+
+    private Role findRoleByName(String name) {
+        Optional<Role> role = roleRepository.findByName(name);
+        if(role.isEmpty()) {
+            throw new ServerException(ServerError.INCORRECT_ROLE);
+        }
+        return role.get();
+    }
+
+    private Office findOfficeByName(String name) {
+        Optional<Office> office = officeRepository.findByName(name);
+        if(office.isEmpty()) {
+            throw new ServerException(ServerError.INCORRECT_OFFICE_NAME);
+        }
+        return  office.get();
     }
 
 }
