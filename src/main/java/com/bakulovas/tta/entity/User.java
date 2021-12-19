@@ -8,6 +8,7 @@ import org.springframework.stereotype.Indexed;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -41,10 +42,15 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+    @ManyToOne
+    @JoinColumn(name = "creator_id")
+    private User creator;
+    @Column(name="created")
+    private LocalDateTime created;
 
 
     public User(String login, String password, String email, String firstName, String lastName,
              Office office, Role role) {
-        this(0, login, password, false, email, firstName, lastName, true, office, role);
+        this(0, login, password, false, email, firstName, lastName, true, office, role, null, LocalDateTime.now());
     }
 }
