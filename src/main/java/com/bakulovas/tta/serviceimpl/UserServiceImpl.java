@@ -1,11 +1,12 @@
 package com.bakulovas.tta.serviceimpl;
 
 
+import com.bakulovas.tta.api.dto.request.ChangeUserDtoRequest;
 import com.bakulovas.tta.config.ServerConfig;
-import com.bakulovas.tta.dto.request.AddUserDtoRequest;
-import com.bakulovas.tta.dto.request.LoginUserDtoRequest;
-import com.bakulovas.tta.dto.response.LoginUserDtoResponse;
-import com.bakulovas.tta.dto.response.UserDtoResponse;
+import com.bakulovas.tta.api.dto.request.AddUserDtoRequest;
+import com.bakulovas.tta.api.dto.request.LoginUserDtoRequest;
+import com.bakulovas.tta.api.dto.response.LoginUserDtoResponse;
+import com.bakulovas.tta.api.dto.response.UserDtoResponse;
 import com.bakulovas.tta.entity.Office;
 import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;
@@ -151,6 +152,11 @@ public class UserServiceImpl implements UserService {
             throw new ServerException(ServerError.INCORRECT_LOGIN_OR_PASSWORD);
         }
         return u.get();
+    }
+
+    @Override
+    public UserDtoResponse updateUser(int id, ChangeUserDtoRequest request) {
+        return null;
     }
 
 

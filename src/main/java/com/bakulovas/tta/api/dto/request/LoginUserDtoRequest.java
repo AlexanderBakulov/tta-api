@@ -1,4 +1,4 @@
-package com.bakulovas.tta.dto.request;
+package com.bakulovas.tta.api.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

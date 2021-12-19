@@ -1,15 +1,16 @@
-package com.bakulovas.tta.dto.response;
+package com.bakulovas.tta.api.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginUserDtoResponse {
+public class UserDtoResponse {
 
     private long id;
     private String login;
@@ -20,6 +21,5 @@ public class LoginUserDtoResponse {
     private boolean isActive;
     private String office;
     private String role;
-    private String token;
 
 }

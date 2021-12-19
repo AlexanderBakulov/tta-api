@@ -1,8 +1,7 @@
 package com.bakulovas.tta.api;
 
-import com.bakulovas.tta.dto.request.LoginUserDtoRequest;
-import com.bakulovas.tta.dto.response.LoginUserDtoResponse;
-import com.bakulovas.tta.errors.ServerException;
+import com.bakulovas.tta.api.dto.request.LoginUserDtoRequest;
+import com.bakulovas.tta.api.dto.response.LoginUserDtoResponse;
 import com.bakulovas.tta.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

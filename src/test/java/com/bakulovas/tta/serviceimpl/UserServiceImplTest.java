@@ -1,19 +1,16 @@
 package com.bakulovas.tta.serviceimpl;
 
-import com.bakulovas.tta.dto.request.AddUserDtoRequest;
-import com.bakulovas.tta.dto.request.LoginUserDtoRequest;
-import com.bakulovas.tta.dto.response.LoginUserDtoResponse;
-import com.bakulovas.tta.dto.response.UserDtoResponse;
+import com.bakulovas.tta.api.dto.request.AddUserDtoRequest;
+import com.bakulovas.tta.api.dto.request.LoginUserDtoRequest;
+import com.bakulovas.tta.api.dto.response.LoginUserDtoResponse;
+import com.bakulovas.tta.api.dto.response.UserDtoResponse;
 import com.bakulovas.tta.errors.ServerError;
 import com.bakulovas.tta.errors.ServerException;
 import com.bakulovas.tta.service.UserService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,9 +1,9 @@
 package com.bakulovas.tta.mappers;
 
 
-import com.bakulovas.tta.dto.request.AddUserDtoRequest;
-import com.bakulovas.tta.dto.response.LoginUserDtoResponse;
-import com.bakulovas.tta.dto.response.UserDtoResponse;
+import com.bakulovas.tta.api.dto.request.AddUserDtoRequest;
+import com.bakulovas.tta.api.dto.response.LoginUserDtoResponse;
+import com.bakulovas.tta.api.dto.response.UserDtoResponse;
 import com.bakulovas.tta.entity.Office;
 import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;

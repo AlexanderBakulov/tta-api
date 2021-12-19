@@ -1,7 +1,7 @@
-package com.bakulovas.tta.dto.request;
+package com.bakulovas.tta.api.dto.request;
 
 
-import com.bakulovas.tta.dto.validation.annotations.MinLength;
+import com.bakulovas.tta.api.dto.validation.annotations.MinLength;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +38,7 @@ public class AddUserDtoRequest {
     @Size(min=1, max=5)
     private String office;
     @NotEmpty
+    @Size(min=1, max=32)
     private String role;
 
 

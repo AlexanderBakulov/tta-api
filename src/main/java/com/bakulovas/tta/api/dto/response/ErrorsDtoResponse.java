@@ -1,4 +1,4 @@
-package com.bakulovas.tta.dto.response;
+package com.bakulovas.tta.api.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,7 @@
-package com.bakulovas.tta.dto.validation.annotations;
+package com.bakulovas.tta.api.dto.validation.annotations;
 
 
-import com.bakulovas.tta.dto.validation.MinLengthValidator;
+import com.bakulovas.tta.api.dto.validation.MinLengthValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
