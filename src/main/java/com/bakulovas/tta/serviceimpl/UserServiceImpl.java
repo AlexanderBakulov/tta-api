@@ -66,12 +66,10 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public LoginUserDtoResponse loginUser(LoginUserDtoRequest request) {
         User user = new User();
-        log.info("ADMIN LOGIN IS " + serverConfig.getAdminLogin());
-        log.info("ADMIN PASSWORD IS " + serverConfig.getAdminPassword());
         if(request.getLogin().equals(serverConfig.getAdminLogin()) && passwordService.validatePassword(serverConfig.getAdminPassword(), request.getPassword())) {
             user.setId(0);
             user.setLogin(request.getLogin());
-            user.setOffice(officeRepository.getByName("MSK"));
+            user.setOffice(officeRepository.getByName(serverConfig.getDefaultOffice()));
             user.setRole(roleRepository.getByName("ADMIN"));
         } else {
             user = getUser(request.getLogin());

@@ -63,7 +63,9 @@ tta:
   lunch_end_hour: 13
   confirm_timer: 24
   admin_login: 'Admin'
+  #Password1
   admin_password: '$2a$10$Q/flBdnJ.FA4W1CPJ6I9NOkJxsLtU8qEMfG32klfeD4wf0pWxaoge'
+  default_office: 'MSK'
 
 #Actuator
 management:
@@ -73,4 +75,5 @@ management:
         include: '*'
 
 jwt:
+  #Password1
   secret: 'Password1'

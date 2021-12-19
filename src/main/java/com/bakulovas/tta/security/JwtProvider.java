@@ -1,5 +1,6 @@
 package com.bakulovas.tta.security;
 
+import com.bakulovas.tta.config.ServerConfig;
 import com.bakulovas.tta.entity.Office;
 import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;
@@ -11,23 +12,21 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 @Log
 public class JwtProvider {
 
-    @Value("$(jwt.secret)")
-    private String jwtSecret;
-
     private final RoleRepository roleRepository;
     private final OfficeRepository officeRepository;
+    private final ServerConfig serverConfig;
 
     @Autowired
-    public JwtProvider(RoleRepository roleRepository, OfficeRepository officeRepository) {
+    public JwtProvider(RoleRepository roleRepository, OfficeRepository officeRepository, ServerConfig serverConfig) {
         this.roleRepository = roleRepository;
         this.officeRepository = officeRepository;
+        this.serverConfig = serverConfig;
     }
 
     public String generateToken(User user) {
@@ -38,14 +37,14 @@ public class JwtProvider {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .signWith(SignatureAlgorithm.HS512, serverConfig.getJwtSecret())
                 .compact();
     }
 
     public User getUserFromToken(String token) {
         try {
             Claims body = Jwts.parser()
-                    .setSigningKey(jwtSecret)
+                    .setSigningKey(serverConfig.getJwtSecret())
                     .parseClaimsJws(token)
                     .getBody();
 
@@ -57,6 +56,7 @@ public class JwtProvider {
             user.setId((Integer) body.get("userId"));
             user.setOffice(office);
             user.setRole(role);
+
             log.info("USER_FROM_TOKEN " + user.getLogin() + user.getRole().getName() + user.getOffice().getName());
             return user;
 

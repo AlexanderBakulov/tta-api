@@ -15,13 +15,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+import static com.bakulovas.tta.config.StaticData.AUTHORIZATION;
 import static org.springframework.util.StringUtils.hasText;
 
 @Component
 @Log
 public class JwtFilter extends GenericFilterBean {
-
-    public static final String AUTHORIZATION = "Authorization";
 
     private final JwtProvider jwtProvider;
 

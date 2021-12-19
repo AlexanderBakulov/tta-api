@@ -19,6 +19,8 @@ public class ServerConfig {
     private final int confirmTimer;
     private final String adminLogin;
     private final String adminPassword;
+    private final String defaultOffice;
+    private final String jwtSecret;
 
     public ServerConfig(@Value("${tta.min_password_length}") int minPasswordLength,
                         @Value("${tta.low_priority_timer}") int lowPriorityTimer,
@@ -30,7 +32,9 @@ public class ServerConfig {
                         @Value("${tta.lunch_end_hour}") int lunchEndHour,
                         @Value("${tta.confirm_timer}") int confirmTimer,
                         @Value("${tta.admin_login}") String adminLogin,
-                        @Value("${tta.admin_password}") String adminPassword) {
+                        @Value("${tta.admin_password}") String adminPassword,
+                        @Value("${tta.default_office}") String defaultOffice,
+                        @Value("${jwt.secret}") String jwtSecret) {
         this.minPasswordLength = minPasswordLength;
         this.lowPriorityTimer = lowPriorityTimer;
         this.mediumPriorityTimer = mediumPriorityTimer;
@@ -42,6 +46,8 @@ public class ServerConfig {
         this.confirmTimer = confirmTimer;
         this.adminLogin = adminLogin;
         this.adminPassword = adminPassword;
+        this.defaultOffice = defaultOffice;
+        this.jwtSecret = jwtSecret;
     }
 
     public int getMinPasswordLength() {
@@ -86,5 +92,13 @@ public class ServerConfig {
 
     public String getAdminPassword() {
         return adminPassword;
+    }
+
+    public String getDefaultOffice() {
+        return defaultOffice;
+    }
+
+    public String getJwtSecret() {
+        return jwtSecret;
     }
 }
