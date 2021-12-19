@@ -107,11 +107,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public UserDtoResponse getUser(int id) {
-        Optional<User> u = userRepository.findById(id);
-        if(u.isEmpty()) {
-            throw new ServerException(ServerError.USER_NOT_FOUND);
-        }
-        User user = u.get();
+        User user = findById(id);
         log.info("GET user with id " + user.getId());
         return userMapper.convertToDto(user);
     }
@@ -119,6 +115,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public Set<UserDtoResponse> getUsers(String login, String lastname) {
         Set<User> users = new HashSet<>();
         Optional<User> u;
@@ -146,6 +143,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getUser(String login) throws ServerException {
         Optional<User> u = userRepository.findByLogin(login);
         if(u.isEmpty()) {
@@ -154,10 +152,51 @@ public class UserServiceImpl implements UserService {
         return u.get();
     }
 
+//    private String email;
+//    private String firstName;
+//    private String lastName;
+//    private String office;
+//    private String role;
+
     @Override
+    @Transactional
     public UserDtoResponse updateUser(int id, ChangeUserDtoRequest request) {
-        return null;
+        User user = findById(id);
+        if(request.getEmail() != null) {
+            user.setEmail(request.getEmail());
+        }
+        if(request.getFirstName() != null) {
+            user.setFirstName(request.getFirstName());
+        }
+        if(request.getLastName() != null) {
+            user.setLastName(request.getLastName());
+        }
+        if(request.getOffice() != null) {
+            Optional<Office> office = officeRepository.findByName(request.getOffice());
+            if(office.isEmpty()) {
+                throw new ServerException(ServerError.INCORRECT_OFFICE_NAME);
+            }
+            user.setOffice(office.get());
+        }
+        if(request.getRole() != null) {
+            Optional<Role> role = roleRepository.findByName(request.getRole());
+            if(role.isEmpty()) {
+                throw new ServerException(ServerError.INCORRECT_ROLE);
+            }
+            user.setRole(role.get());
+        }
+        userRepository.save(user);
+        log.info("CHANGE user with id " + user.getId());
+        return userMapper.convertToDto(user);
     }
 
+
+    private User findById(int id) {
+        Optional<User> user = userRepository.findById(id);
+        if(user.isEmpty()) {
+            throw new ServerException(ServerError.USER_NOT_FOUND);
+        }
+        return user.get();
+    }
 
 }
