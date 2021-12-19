@@ -1,7 +1,7 @@
 package com.bakulovas.tta.serviceimpl;
 
 
-import com.bakulovas.tta.api.dto.request.ChangeUserDtoRequest;
+import com.bakulovas.tta.api.dto.request.UpdateUserDtoRequest;
 import com.bakulovas.tta.config.ServerConfig;
 import com.bakulovas.tta.api.dto.request.AddUserDtoRequest;
 import com.bakulovas.tta.api.dto.request.LoginUserDtoRequest;
@@ -160,7 +160,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDtoResponse updateUser(int id, ChangeUserDtoRequest request) {
+    public UserDtoResponse updateUser(int id, UpdateUserDtoRequest request) {
         User user = findById(id);
         if(request.getEmail() != null) {
             user.setEmail(request.getEmail());
@@ -186,7 +186,7 @@ public class UserServiceImpl implements UserService {
             user.setRole(role.get());
         }
         userRepository.save(user);
-        log.info("CHANGE user with id " + user.getId());
+        log.info("UPDATE user with id " + user.getId());
         return userMapper.convertToDto(user);
     }
 

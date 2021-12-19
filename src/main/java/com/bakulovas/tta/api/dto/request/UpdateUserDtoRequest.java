@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChangeUserDtoRequest {
+public class UpdateUserDtoRequest {
 
     @Email
     @Size(min=1, max=64)
