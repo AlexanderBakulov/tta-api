@@ -1,9 +1,12 @@
-package com.bakulovas.tta.repository;
+package com.bakulovas.tta.integrationTests.repository;
 
 
 import com.bakulovas.tta.entity.Office;
 import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;
+import com.bakulovas.tta.repository.OfficeRepository;
+import com.bakulovas.tta.repository.RoleRepository;
+import com.bakulovas.tta.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

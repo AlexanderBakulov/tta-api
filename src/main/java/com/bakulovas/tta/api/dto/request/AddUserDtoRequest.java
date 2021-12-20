@@ -5,6 +5,7 @@ import com.bakulovas.tta.api.dto.validation.annotations.MinLength;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.*;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.*;
 import static com.bakulovas.tta.config.StaticData.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddUserDtoRequest {

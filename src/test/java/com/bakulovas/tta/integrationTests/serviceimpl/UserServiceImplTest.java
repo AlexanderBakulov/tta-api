@@ -1,4 +1,4 @@
-package com.bakulovas.tta.serviceimpl;
+package com.bakulovas.tta.integrationTests.serviceimpl;
 
 import com.bakulovas.tta.api.dto.request.AddUserDtoRequest;
 import com.bakulovas.tta.api.dto.request.LoginUserDtoRequest;

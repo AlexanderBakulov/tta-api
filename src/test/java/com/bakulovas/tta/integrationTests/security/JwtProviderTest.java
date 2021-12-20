@@ -1,10 +1,11 @@
-package com.bakulovas.tta.security;
+package com.bakulovas.tta.integrationTests.security;
 
 import com.bakulovas.tta.entity.Office;
 import com.bakulovas.tta.entity.Role;
 import com.bakulovas.tta.entity.User;
 import com.bakulovas.tta.repository.OfficeRepository;
 import com.bakulovas.tta.repository.RoleRepository;
+import com.bakulovas.tta.security.JwtProvider;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
