@@ -77,6 +77,7 @@ public class UserServiceImpl implements UserService {
             user.setLogin(request.getLogin());
             user.setOffice(officeRepository.getByName(serverConfig.getDefaultOffice()));
             user.setRole(roleRepository.getByName("ADMIN"));
+            UserDetailsImpl.fromUserToUserDetails(user);
         } else {
             user = getUser(request.getLogin());
             passwordService.validatePassword(user.getPassword(), request.getPassword());
@@ -86,7 +87,8 @@ public class UserServiceImpl implements UserService {
         }
             String token = jwtProvider.generateToken(user);
             log.info("LOGIN user with id " + user.getId());
-        return userMapper.convertToDto(user, token);
+            LoginUserDtoResponse response = userMapper.convertToDto(user, token);
+        return response;
     }
 
     @Override
@@ -97,7 +99,6 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.convertToUser(request, office, role);
         user.setPassword(passwordService.encodePassword(request.getPassword()));
         user.setCreated(LocalDateTime.now());
-        //todo add real creator
         String username = getUsernameFromSecurityContext();
         log.info("USERNAME FROM SECURITY CONTEXT " + username);
         user.setCreator(username);
