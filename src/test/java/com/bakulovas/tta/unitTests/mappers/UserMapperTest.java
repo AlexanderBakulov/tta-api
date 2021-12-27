@@ -13,8 +13,7 @@ import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class UserMapperTest {
@@ -55,28 +54,37 @@ public class UserMapperTest {
     @Test
     public void testConvertToDto_LoginUserDtoResponse() {
         LoginUserDtoResponse response = userMapper.convertToDto(user, token);
-        assertEquals(response.getLogin(), user.getLogin());
-        assertEquals(response.getToken(), token);
-        assertEquals(response.getRole(), user.getRole().getName());
-        assertEquals(response.getOffice(), user.getOffice().getName());
+        assertAll(
+                () -> assertEquals(response.getLogin(), user.getLogin()),
+                () -> assertEquals(response.getToken(), token),
+                () -> assertEquals(response.getRole(), user.getRole().getName()),
+                () -> assertEquals(response.getOffice(), user.getOffice().getName())
+        );
+
     }
 
     @Test
     public void testConvertToDto_UserDtoResponse() {
         UserDtoResponse response = userMapper.convertToDto(user);
-        assertEquals(response.getLogin(), user.getLogin());
-        assertEquals(response.getRole(), user.getRole().getName());
-        assertEquals(response.getOffice(), user.getOffice().getName());
+        assertAll(
+                () -> assertEquals(response.getLogin(), user.getLogin()),
+                () -> assertEquals(response.getRole(), user.getRole().getName()),
+                () -> assertEquals(response.getOffice(), user.getOffice().getName())
+        );
+
     }
 
     @Test
     public void testConvertToUser() {
         User user1 = userMapper.convertToUser(request, office, role);
-        assertEquals(user1.getLogin(), request.getLogin());
-        assertEquals(user1.getRole(), role);
-        assertEquals(user1.getOffice(), office);
-        assertTrue(user1.isActive());
-        assertTrue(user1.isTempPassword());
+        assertAll(
+                () -> assertEquals(user1.getLogin(), request.getLogin()),
+                () -> assertEquals(user1.getRole(), role),
+                () -> assertEquals(user1.getOffice(), office),
+                () -> assertTrue(user1.isActive()),
+                () -> assertTrue(user1.isTempPassword())
+        );
+
     }
 
 }
