@@ -19,14 +19,12 @@ import com.bakulovas.tta.repository.UserOptionsRepository;
 import com.bakulovas.tta.repository.UserRepository;
 import com.bakulovas.tta.security.JwtProvider;
 import com.bakulovas.tta.security.PasswordService;
-import com.bakulovas.tta.security.UserDetailsImpl;
+import com.bakulovas.tta.security.SecurityContext;
 import com.bakulovas.tta.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,13 +49,14 @@ public class UserServiceImpl implements UserService {
     private final PasswordService passwordService;
     private final JwtProvider jwtProvider;
     private final ServerConfig serverConfig;
+    private final SecurityContext securityContext;
 
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, OfficeRepository officeRepository,
                            RoleRepository roleRepository, UserOptionsRepository userOptionsRepository,
                            UserMapper userMapper, PasswordService passwordService, JwtProvider jwtProvider,
-                           ServerConfig serverConfig) {
+                           ServerConfig serverConfig, SecurityContext securityContext) {
         this.userRepository = userRepository;
         this.officeRepository = officeRepository;
         this.roleRepository = roleRepository;
@@ -66,6 +65,7 @@ public class UserServiceImpl implements UserService {
         this.passwordService = passwordService;
         this.jwtProvider = jwtProvider;
         this.serverConfig = serverConfig;
+        this.securityContext = securityContext;
     }
 
     @Override
@@ -77,7 +77,6 @@ public class UserServiceImpl implements UserService {
             user.setLogin(request.getLogin());
             user.setOffice(officeRepository.getByName(serverConfig.getDefaultOffice()));
             user.setRole(roleRepository.getByName("ADMIN"));
- //           UserDetailsImpl.fromUserToUserDetails(user);
         } else {
             user = getUser(request.getLogin());
             passwordService.validatePassword(user.getPassword(), request.getPassword());
@@ -98,7 +97,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.convertToUser(request, office, role);
         user.setPassword(passwordService.encodePassword(request.getPassword()));
         user.setCreated(LocalDateTime.now());
-        String username = getUsernameFromSecurityContext();
+        String username = securityContext.getUsernameFromSecurityContext();
         log.info("USERNAME FROM SECURITY CONTEXT " + username);
         user.setCreator(username);
         userRepository.save(user);
@@ -201,18 +200,6 @@ public class UserServiceImpl implements UserService {
             throw new ServerException(ServerError.INCORRECT_OFFICE_NAME);
         }
         return  office.get();
-    }
-
-    public String getUsernameFromSecurityContext() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth == null) {
-            throw new ServerException(ServerError.USER_NOT_AUTHENTICATED);
-        }
-        Object obj = auth.getPrincipal();
-        if(obj == null) {
-            throw new ServerException(ServerError.USER_NOT_AUTHENTICATED);
-        }
-        return ((UserDetailsImpl) obj).getUsername();
     }
 
 }
